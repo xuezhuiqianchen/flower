@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/theme">
+ 
+     <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"  
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="0.5dp"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:singleLine="true"
+        android:textColor="@color/text_theme"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="44.5dp"
+        android:layout_alignParentRight="true"
+        android:padding="13dp"
+        android:textColor="@color/text_theme"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="39.5dp"
+        android:padding="11dp"
+        android:textColor="@color/text_theme"
+        android:textSize="15dp" />
+
+     <ImageView
+         android:id="@+id/iv_left"
+         android:layout_width="40dp"
+         android:layout_height="39.5dp"
+         android:paddingLeft="8dp"
+         android:paddingRight="8dp"
+         android:paddingTop="11dp"
+         android:paddingBottom="11dp"
+         android:scaleType="centerInside"
+         android:src="@drawable/back_icon"
+         android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="40dp"
+        android:layout_height="39.5dp"
+        android:layout_alignParentRight="true"
+        android:padding="11dp"
+        android:scaleType="fitCenter"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider"/>
+
+</RelativeLayout>

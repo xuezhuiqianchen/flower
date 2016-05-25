@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray_light">
+    <RelativeLayout
+        android:id="@+id/rl_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/theme">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginBottom="0.5dp"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/text_theme"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="40dp"
+            android:layout_height="39.5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/back_icon" />
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="40dp"
+            android:layout_height="39.5dp"
+            android:layout_alignParentRight="true"
+            android:padding="11dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/share_red_icon"/>
+
+        <ImageView
+            android:id="@+id/iv_praise"
+            android:layout_width="40dp"
+            android:layout_height="39.5dp"
+            android:layout_toLeftOf="@id/iv_share"
+            android:padding="11dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/like_icon"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_reply_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <EditText
+            android:id="@+id/et_reply_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="80dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="10dp"
+            android:hint="@string/str_reply_landlord"
+            android:textSize="13dp"
+            android:textColor="@color/text_theme"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="5dp"
+            android:background="@drawable/bg_round_corner_white" />
+
+        <TextView
+            android:id="@+id/tv_reply"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/et_reply_content"
+            android:textSize="13dp"
+            android:textColor="@color/text_theme"
+            android:gravity="center"
+            android:text="@string/str_reply"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_title_bar"
+        android:layout_above="@id/rl_reply_bar"
+        android:dividerHeight="0dp"
+        android:background="@android:color/white"
+        android:transcriptMode="alwaysScroll" />
+</RelativeLayout>

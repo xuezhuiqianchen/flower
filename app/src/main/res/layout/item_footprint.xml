@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray_light">
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingTop="10dp"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:textColor="@color/text_theme"
+        android:text="2016/3/24"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_time"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/bg_round_corner_white">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:textSize="15dp"
+            android:textColor="@color/text_theme"
+            android:lineSpacingExtra="5dp"
+            android:text="We welcome"/>
+
+        <TextView
+            android:id="@+id/tv_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical"
+            android:textSize="13dp"
+            android:textColor="@color/text_gray"
+            android:lineSpacingExtra="3dp"
+            android:text="2016/3/24sdsfdsf"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_place"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:src="@drawable/temp1" />
+
+            <TextView
+                android:id="@+id/tv_image_num"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:background="#33ffffff"
+                android:text="共3张"/>
+
+            <ImageView
+                android:id="@+id/iv_play"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/mediacontroller_play"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <include layout="@layout/item_edit_bar"
+            android:id="@+id/edit_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/rl_image" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

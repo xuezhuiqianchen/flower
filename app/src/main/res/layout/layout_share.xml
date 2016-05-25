@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/seventy_black">
+
+    <RelativeLayout
+        android:id="@+id/layout_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#1a1f3b"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/layout_wechat"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:src="@mipmap/icon_wechat"
+                android:background="@drawable/bg_round_corner_white"/>
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:textSize="12dp"
+                android:textColor="@color/white"
+                android:text="@string/wechat"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_friend"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/layout_wechat"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:src="@mipmap/icon_moments"
+                android:background="@drawable/bg_round_corner_white"/>
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:textSize="12dp"
+                android:textColor="@color/white"
+                android:text="@string/friend"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_qq"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/layout_friend"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:src="@mipmap/icon_wechat"
+                android:background="@drawable/bg_round_corner_white"/>
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:textSize="12dp"
+                android:textColor="@color/white"
+                android:text="@string/qq"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_qzone"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/layout_qq"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:src="@mipmap/icon_wechat"
+                android:background="@drawable/bg_round_corner_white"/>
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:textSize="12dp"
+                android:textColor="@color/white"
+                android:text="@string/qzone"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_sina"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/layout_qzone"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:src="@mipmap/icon_wechat"
+                android:background="@drawable/bg_round_corner_white"/>
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:textSize="12dp"
+                android:textColor="@color/white"
+                android:text="@string/sina"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/layout_wechat"
+            android:layout_marginTop="10dp"
+            android:background="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/layout_wechat"
+            android:layout_marginTop="11dp"
+            android:gravity="center"
+            android:textSize="17dp"
+            android:textColor="@color/twenty_white"
+            android:text="@string/str_cancel"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_edit" >
+    </RelativeLayout>
+</RelativeLayout>

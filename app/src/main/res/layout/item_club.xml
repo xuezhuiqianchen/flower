@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_corner_white">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/riv_portrait"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        app:riv_corner_radius="100dp"
+        app:riv_border_width="1dip"
+        app:riv_border_color="#ffffff"
+        app:riv_mutate_background="true"
+        android:src="@drawable/temp1"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/riv_portrait"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:singleLine="true"
+        android:textColor="@color/text_theme"
+        android:textSize="15dp"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/tv_member"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_below="@id/riv_portrait"
+        android:layout_marginLeft="10dp"
+        android:text="会员"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_gray"
+        android:textSize="13dp"/>
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_below="@id/riv_portrait"
+        android:layout_toRightOf="@+id/tv_member"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:textColor="#4d90a8"
+        android:textSize="13dp"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/riv_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_member"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:riv_corner_radius_bottom_left="5dp"
+        app:riv_corner_radius_bottom_right="5dp"
+        app:riv_border_color="#ffffff"
+        app:riv_mutate_background="true"
+        android:src="@drawable/default_image"/>
+</RelativeLayout>

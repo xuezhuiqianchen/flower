@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">花朵</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="input_gesture_answer">请输入手势密码</string>
+    <string name="password_type">使用密码登录？</string>
+
+
+    <string name="login_page">登录</string>
+    <string name="str_club">俱乐部</string>
+    <string name="str_discover">发现</string>
+    <string name="str_msg">消息</string>
+    <string name="str_me">我</string>
+    <string name="str_other">其他</string>
+
+    <string name="str_my_topic">我的话题</string>
+    <string name="str_my_comment">我的评论</string>
+    <string name="str_my_suggest">我的意见</string>
+    <string name="str_setting">设置</string>
+
+    <string name="str_my_club">我的俱乐部</string>
+    <string name="str_nickname">昵称</string>
+    <string name="str_signature">个性签名</string>
+
+    <string name="str_footprint">足迹</string>
+    <string name="str_topic">话题</string>
+    <string name="str_member">会员</string>
+
+    <string name="str_comment">评论</string>
+    <string name="str_praise">赞</string>
+
+    <string name="str_reply_landlord">回复楼主</string>
+    <string name="str_reply">回复</string>
+
+    <string name="str_title">标题</string>
+    <string name="str_content">内容</string>
+    <string name="str_suggest">意见</string>
+
+    <string name="str_save">保存</string>
+    <string name="str_cancel">取消</string>
+    <string name="str_send">发送</string>
+    <string name="str_submit">提交</string>
+    <string name="str_share_to">分享至...</string>
+    <string name="str_submit_ok">提交成功</string>
+
+    <string name="str_clear_cache">清除缓存</string>
+    <string name="str_logout">退出登录</string>
+    <string name="str_suggest_feedback">意见反馈</string>
+    <string name="str_post_topic">发表话题</string>
+
+
+    <string name="tip_geting">正在获取数据...</string>
+    <string name="tip_submiting">正在提交...</string>
+    <string name="tip_uploading">正在上传...</string>
+    <string name="tip_error">发生错误</string>
+
+    <string name="tip_logining">登录...</string>
+    <string name="tip_login_success">登录成功</string>
+    <string name="tip_login_fail">登录失败</string>
+
+    <string name="tip_authorizing">正在授权...</string>
+    <string name="tip_authorize_fail">授权失败</string>
+    <string name="tip_authorize_success">授权成功</string>
+    <string name="tip_authorize_cancel">取消授权</string>
+
+    <string name="tip_msg_empty">消息内容不可为空！</string>
+    <string name="tip_title_empty">标题不可为空！</string>
+    <string name="tip_content_empty">内容不可为空！</string>
+
+    <string name="tip_post_success">发表成功</string>
+
+    <string name="share_title">来自花朵</string>
+    <string name="wechat">微信</string>
+    <string name="friend">朋友圈</string>
+    <string name="qq">QQ</string>
+    <string name="qzone">QQ空间</string>
+    <string name="sina">新浪微博</string>
+
+    <!-- XListView -->
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载&#8230;</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+
+</resources>

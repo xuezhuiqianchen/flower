@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_image" />
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="40dp"
+        android:layout_height="39.5dp"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/back_round_icon"/>
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:text="@string/str_save" />
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="130dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/white"
+        android:textSize="11dp"
+        android:gravity="center"
+        android:text="轻触更改封面"
+        android:background="@drawable/bg_half_round"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/riv_portrait"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="110dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/temp1"
+        app:riv_border_color="@color/white"
+        app:riv_border_width="2dp"
+        app:riv_corner_radius="100dp" />
+
+    <TextView
+        android:id="@+id/tv_change_portrait"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_below="@id/riv_portrait"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/theme"
+        android:textSize="13dp"
+        android:gravity="center"
+        android:text="更改头像" />
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/tv_change_portrait"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/text_gray_light"
+        android:textSize="13dp"
+        android:gravity="center_vertical"
+        android:text="@string/str_nickname" />
+
+    <EditText
+        android:id="@+id/et_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/tv_change_portrait"
+        android:layout_marginLeft="90dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
+        android:textSize="13dp"
+        android:textColor="@color/text_theme"
+        android:gravity="center_vertical"
+        android:text="dms"
+        android:background="@null"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/et_nickname"
+        android:layout_marginLeft="20dp"
+        android:background="@color/divider" />
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/et_nickname"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/text_gray_light"
+        android:textSize="13dp"
+        android:gravity="center"
+        android:text="@string/str_signature" />
+
+    <EditText
+        android:id="@+id/et_signature"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/et_nickname"
+        android:layout_marginLeft="90dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
+        android:textSize="13dp"
+        android:textColor="@color/text_theme"
+        android:gravity="center_vertical"
+        android:text="dms"
+        android:background="@null"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/et_signature"
+        android:layout_marginLeft="20dp"
+        android:background="@color/divider" />
+</RelativeLayout>

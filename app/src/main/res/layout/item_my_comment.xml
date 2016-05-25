@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/riv_portrait"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        app:riv_corner_radius="100dp"
+        app:riv_border_width="1dip"
+        app:riv_border_color="#ffffff"
+        app:riv_mutate_background="true"
+        android:src="@drawable/temp1"/>
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/riv_portrait"
+        android:layout_toLeftOf="@id/tv_layer"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:singleLine="true"
+        android:textColor="@color/theme"
+        android:textSize="13dp"
+        android:gravity="bottom"
+        android:text="skdfjsljf"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/riv_portrait"
+        android:layout_below="@id/tv_nickname"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:lineSpacingExtra="5dp"
+        android:gravity="center_vertical"
+        android:textSize="15dp"
+        android:textColor="@color/text_theme"
+        android:text="content"/>
+
+    <ImageView
+        android:id="@+id/iv_msg_title"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_toRightOf="@id/riv_portrait"
+        android:layout_below="@id/tv_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/msg_title_icon"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv_msg_title"
+        android:layout_below="@id/tv_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:lineSpacingExtra="5dp"
+        android:gravity="center_vertical"
+        android:textSize="15dp"
+        android:textColor="@color/text_theme"
+        android:text="sub_content"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@id/riv_portrait"
+        android:layout_below="@id/tv_title"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:lineSpacingExtra="5dp"
+        android:gravity="center_vertical"
+        android:textSize="15dp"
+        android:textColor="@color/text_gray"
+        android:text="1天前"/>
+
+    <TextView
+        android:id="@+id/tv_club"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@id/tv_time"
+        android:layout_below="@id/tv_title"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:lineSpacingExtra="5dp"
+        android:gravity="center_vertical"
+        android:textSize="15dp"
+        android:textColor="@color/text_gray"
+        android:text="club"/>
+
+</RelativeLayout>

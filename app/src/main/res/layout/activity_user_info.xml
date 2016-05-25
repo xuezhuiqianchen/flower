@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_image" />
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="40dp"
+        android:layout_height="39.5dp"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/back_icon" />
+
+    <ImageView
+        android:id="@+id/iv_edit"
+        android:layout_width="40dp"
+        android:layout_height="39.5dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/edit_user_info"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/riv_portrait"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="110dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/temp1"
+        app:riv_border_color="@color/white"
+        app:riv_border_width="2dp"
+        app:riv_corner_radius="100dp" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/riv_portrait"
+        android:textColor="@color/text_gray"
+        android:textSize="13dp"
+        android:gravity="center"
+        android:text="dms" />
+
+    <TextView
+        android:id="@+id/tv_signature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nickname"
+        android:layout_marginTop="5dp"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/text_theme"
+        android:textSize="13dp"
+        android:gravity="center"
+        android:text="dms"/>
+
+    <TextView
+        android:id="@+id/tv_club"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_signature"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/text_gray_light"
+        android:textSize="13dp"
+        android:gravity="center"
+        android:text="@string/str_my_club"/>
+
+    <HorizontalScrollView
+        android:id="@+id/hsv_images_view"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_below="@id/tv_club"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="10dp" >
+
+        <LinearLayout
+            android:id="@+id/ll_images_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"  >
+        </LinearLayout>
+    </HorizontalScrollView >
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="flower_progress_colors">
+        <item>@color/theme</item>
+        <item>@color/tip_theme</item>tip_theme_light
+        <item>@color/tip_theme_light</item>
+    </string-array>
+
+
+    <string-array name="progress_num">
+        <item>474</item>
+        <item>224</item>tip_theme_light
+        <item>199</item>
+    </string-array>
+
+    <string-array name="progress_name">
+        <item>nzk</item>
+        <item>gyk</item>tip_theme_light
+        <item>xz</item>
+    </string-array>
+</resources>

@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.ly.flower"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        debug {
+        }
+
+        release {
+            storeFile file("flower.jks")
+            storePassword "flower"
+            keyAlias "flower"
+            keyPassword "flower"
+        }
+    }
+
+
+    buildTypes {
+
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+repositories {
+    mavenCentral()
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+//    compile 'com.cjj.materialrefeshlayout:library:1.3.0'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.makeramen:roundedimageview:2.2.1'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'cn.pedant.sweetalert:library:1.3'
+//    compile 'com.pnikosis:materialish-progress:1.7'
+    compile files('libs/universal-image-loader-1.9.5.jar')
+    compile files('libs/httpmime-4.1.3.jar')
+    compile files('libs/SocialSDK_QQZone_1.jar')
+    compile project(':PushSDK')
+    compile project(':multi-image-selector')
+    compile project(':vitamio')
+    compile files('libs/SocialSDK_tencentWB_1.jar')
+    compile files('libs/SocialSDK_email.jar')
+}

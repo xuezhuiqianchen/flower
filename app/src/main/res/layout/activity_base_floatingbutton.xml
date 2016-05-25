@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_title"
+        layout="@layout/title_bar"/>
+
+    <LinearLayout
+        android:id="@+id/activity_base_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_title"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <include layout="@layout/item_progress_bar"
+        android:id="@+id/rl_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66ffffff"
+        android:visibility="gone" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/edit_topic_icon"
+            app:layout_anchor="@id/container"
+            app:layout_anchorGravity="bottom|right"
+            app:backgroundTint="@color/theme"
+            app:rippleColor="@color/tip_theme"
+            app:borderWidth="0dp"
+            app:elevation="5dp"
+            app:pressedTranslationZ="0dp"
+            app:fabSize="normal" />
+    </android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

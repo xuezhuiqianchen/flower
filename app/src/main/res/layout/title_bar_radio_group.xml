@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/theme">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="40dp"
+        android:layout_height="39.5dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/back_icon" />
+
+    <ImageView
+        android:id="@+id/iv_edit"
+        android:layout_width="40dp"
+        android:layout_height="39.5dp"
+        android:layout_alignParentRight="true"
+        android:padding="8dp"
+        android:src="@drawable/share_red_icon"/>
+
+    <RadioGroup
+        android:id="@+id/rg_menu"
+        android:layout_width="match_parent"
+        android:layout_height="44.5dp"
+        android:layout_toRightOf="@id/iv_back"
+        android:layout_toLeftOf="@id/iv_edit"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"   >
+
+        <RadioButton
+            android:id="@+id/radio_button1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:checked="true"
+            android:textSize="15dp"
+            android:textColor="@drawable/tab_select_black_gray"
+            android:text="足迹" />
+
+        <RadioButton
+            android:id="@+id/radio_button2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:checked="false"
+            android:background="@null"
+            android:textSize="15dp"
+            android:textColor="@drawable/tab_select_black_gray"
+            android:text="足迹"/>
+
+
+
+        <RadioButton
+            android:id="@+id/radio_button3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:textSize="15dp"
+            android:textColor="@drawable/tab_select_black_gray"
+            android:checked="false"
+            android:background="@null"
+            android:text="足迹"/>
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/rg_menu"
+        android:background="@color/divider"/>
+
+</RelativeLayout>

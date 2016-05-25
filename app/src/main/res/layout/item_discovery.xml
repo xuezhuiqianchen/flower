@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/bg_round_corner_white">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/riv_portrait"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        app:riv_corner_radius="100dp"
+        app:riv_border_width="1dip"
+        app:riv_border_color="#ffffff"
+        app:riv_mutate_background="true"
+        android:src="@drawable/default_portrait"/>
+    
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@id/riv_portrait"
+        android:layout_marginRight="10dp"
+        android:gravity="bottom"
+        android:textSize="13dp"
+        android:textColor="@color/theme" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@id/riv_portrait"
+        android:layout_below="@id/tv_nickname"
+        android:gravity="bottom"
+        android:textSize="13dp"
+        android:textColor="@color/text_theme" />
+
+    <TextView
+        android:id="@+id/tv_club"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@id/tv_time"
+        android:layout_below="@id/tv_nickname"
+        android:layout_marginLeft="10dp"
+        android:gravity="bottom"
+        android:textSize="13dp"
+        android:textColor="@color/text_blue_light" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@id/riv_portrait"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textSize="13dp"
+        android:textColor="@color/text_theme"/>
+
+    <TextView
+        android:id="@+id/tv_sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:textSize="13dp"
+        android:textColor="@color/text_gray"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:lineSpacingExtra="5dp" />
+
+    <include layout="@layout/item_media_player"
+        android:id="@+id/rl_media_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_sub_title"
+        android:layout_marginTop="5dp"/>
+
+    <include layout="@layout/item_edit_bar"
+        android:id="@+id/edit_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/rl_media_player" />
+</RelativeLayout>

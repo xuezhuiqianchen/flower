@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray_light">
+
+    <include layout="@layout/title_bar_radio_group"
+        android:id="@+id/titlebar" />
+
+    <com.ly.flower.component.XListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/titlebar"
+        android:scrollbars="none"
+        android:divider="@color/bg_gray_light"
+        android:dividerHeight="0.5dp"/>
+</RelativeLayout>

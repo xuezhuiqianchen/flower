@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/rl_comment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/iv_comment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:src="@drawable/comment_icon"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/tv_comment_num"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/iv_comment"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/text_gray"
+            android:textSize="13dp"
+            android:text="3333"
+            android:singleLine="true"
+            android:gravity="center_vertical"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_praise"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:background="@color/text_gray" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/text_gray" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:id="@+id/iv_praise"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:src="@drawable/praise_icon"
+                android:scaleType="fitXY"/>
+
+            <TextView
+                android:id="@+id/tv_praise_num"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/iv_praise"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/text_gray"
+                android:textSize="13dp"
+                android:text="333"
+                android:singleLine="true"
+                android:gravity="center_vertical"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_share"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/share_icon"
+            android:padding="5dp"
+            android:scaleType="fitXY"/>
+    </RelativeLayout>
+</LinearLayout>

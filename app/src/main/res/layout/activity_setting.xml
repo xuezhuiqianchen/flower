@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray_light">
+
+    <RelativeLayout
+        android:id="@+id/rl_clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/text_gray"
+            android:layout_marginLeft="15dp"
+            android:textSize="13dp"
+            android:gravity="center"
+            android:text="@string/str_clear_cache"/>
+
+        <TextView
+            android:id="@+id/tv_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/text_gray"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:textSize="13dp"
+            android:gravity="center"
+            android:text="3.23M"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/text_gray"
+        android:layout_below="@id/rl_clear_cache"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"
+        android:textSize="13dp"
+        android:gravity="center_vertical"
+        android:text="@string/str_logout"
+        android:background="@android:color/white"/>
+
+</RelativeLayout>
