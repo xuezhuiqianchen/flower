@@ -16,7 +16,7 @@
         app:riv_border_width="1dip"
         app:riv_border_color="#ffffff"
         app:riv_mutate_background="true"
-        android:src="@drawable/temp1"/>
+        android:src="@drawable/default_portrait"/>
 
     <TextView
         android:id="@+id/tv_title"

@@ -28,7 +28,7 @@ public class MsgFragment extends BaseFragment implements XListView.IXListViewLis
 
     private XListView lvMsgList;
     private MsgListAdapter msgListAdapter;
-
+    private boolean bFirst = true;
 
 
     public MsgFragment(MainActivity instance, LayoutInflater inflater) {
@@ -45,7 +45,6 @@ public class MsgFragment extends BaseFragment implements XListView.IXListViewLis
     @Override
     public void initView() {
         rlFragmentView = (RelativeLayout) inflater.inflate(R.layout.fragment_listview, null);
-
         lvMsgList = (XListView) rlFragmentView.findViewById(R.id.listView);
 
         msgListAdapter = new MsgListAdapter(inflater);
@@ -63,7 +62,10 @@ public class MsgFragment extends BaseFragment implements XListView.IXListViewLis
 
     @Override
     public void getData() {
-        lvMsgList.startRefresh();
+        if(bFirst){
+            lvMsgList.startRefresh();
+            bFirst = false;
+        }
     }
 
     @Override
@@ -85,6 +87,11 @@ public class MsgFragment extends BaseFragment implements XListView.IXListViewLis
             JSONObject object = new JSONObject(new String(responsebody));
             JSONArray array = object.getJSONArray("data");
             msgListAdapter.setData(array);
+            if (array.length() >= 20) {
+                lvMsgList.setPullLoadEnable(true);
+            } else {
+                lvMsgList.setPullLoadEnable(false);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

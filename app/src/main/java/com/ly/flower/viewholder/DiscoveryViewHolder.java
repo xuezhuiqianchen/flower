@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ly.common.utils.Common;
 import com.ly.common.utils.DimensionUtils;
 import com.ly.flower.R;
+import com.ly.flower.base.DataStructure;
 import com.ly.flower.share.Player;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -101,10 +102,11 @@ public class DiscoveryViewHolder {
                 imgHeight = Integer.valueOf(strLength);
 
                 int relWidth = Common.DEVICE_SCREEN_WIDTH - DimensionUtils.dip2px(context, 20);
-                int relHeight = imgHeight * imgWidth / relWidth;
+                int relHeight = imgHeight * relWidth / imgWidth;
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(relWidth, relHeight);
                 ivImage.setLayoutParams(layoutParams);
                 ivImage.setImageResource(R.drawable.default_image);
+                ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
             }catch (Exception e) {
                 e.printStackTrace();
             }
@@ -139,6 +141,8 @@ public class DiscoveryViewHolder {
             rlPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!DataStructure.login)
+                        return;
                     if (strIsPraise.equals("0")) {
                         ivPraise.setImageResource(R.drawable.praise_press_icon);
                     } else {
@@ -150,6 +154,8 @@ public class DiscoveryViewHolder {
             rlShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!DataStructure.login)
+                        return;
                 }
             });
 
@@ -161,12 +167,17 @@ public class DiscoveryViewHolder {
                     tvImageNum.setVisibility(View.VISIBLE);
                 }
                 tvImageNum.setText("共" + String.valueOf(imageArray.length()) + "张");
-            }else {
-                String strVideoUrl = object.getString("url_video");
-                setVidioViewMode(Integer.valueOf(imageObject.getString("width")),
-                        Integer.valueOf(imageObject.getString("height")));
-                initMediaVideo(strVideoUrl);
             }
+            /**
+             * 暂时不做视频这块
+             * time：2016.05.25
+             else {
+             String strVideoUrl = object.getString("url_video");
+             setVidioViewMode(Integer.valueOf(imageObject.getString("width")),
+             Integer.valueOf(imageObject.getString("height")));
+             initMediaVideo(strVideoUrl);
+             }
+             */
         } catch (JSONException e) {
             e.printStackTrace();
         }

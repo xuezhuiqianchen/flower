@@ -31,6 +31,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
     private XListView lvClubs;
     private HomeListAdapter homeListAdapter;
+    private boolean bFirst = true;
 
     public HomeFragment(MainActivity instance, LayoutInflater inflater) {
         super(instance, inflater);
@@ -40,7 +41,10 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     public void onResume()
     {
         super.onResume();
-        lvClubs.setPullLoadEnable(true);
+        if (bFirst)
+            lvClubs.setPullLoadEnable(true);
+        else
+            lvClubs.setPullLoadEnable(false);
     }
 
     @Override
@@ -65,7 +69,10 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
     @Override
     public void getData() {
-        lvClubs.startRefresh();
+        if(bFirst){
+            lvClubs.startRefresh();
+            bFirst = false;
+        }
     }
 
     @Override
@@ -98,6 +105,12 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
             JSONObject object = new JSONObject(new String(responsebody));
             JSONArray array = object.getJSONArray("data");
             homeListAdapter.setData(array);
+
+            if (array.length() >= 20) {
+                lvClubs.setPullLoadEnable(true);
+            } else {
+                lvClubs.setPullLoadEnable(false);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

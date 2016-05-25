@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import com.ly.flower.R;
 import com.ly.flower.activity.login.LoginActivity;
 import com.ly.flower.base.BaseActivity;
+import com.ly.flower.base.DataStructure;
 import com.ly.flower.share.MessageHandler;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
@@ -29,8 +30,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private MsgFragment msgFragment = null;
     private UserFragment userFragment = null;
 
-    private boolean bLogin = false;
-
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -38,7 +37,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         {
             case MessageHandler.REQUEST_MSG_FRAGMENT:
                 if (resultCode == MessageHandler.RESULT_OK){
-                    bLogin = true;
+                    DataStructure.login = true;
                     checkId = R.id.rl_msg;
                     doCheckMsgAction();
                 }
@@ -46,7 +45,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
             case MessageHandler.REQUEST_USER_FRAGMENT:
                 if (resultCode == MessageHandler.RESULT_OK) {
-                    bLogin = true;
+                    DataStructure.login = true;
                     checkId = R.id.rl_user;
                     doCheckUserAction();
                 }
@@ -78,7 +77,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private void fillView()
     {
         setTitle(R.string.str_club);
-        bLogin = true;
+        DataStructure.login = true;
     }
 
     private void initFragments()
@@ -213,7 +212,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public boolean doCheckMsgAction(){
-        if (!bLogin)
+        if (!DataStructure.login)
         {
             gotoActivityForResult(LoginActivity.class, MessageHandler.REQUEST_MSG_FRAGMENT);
             return false;
@@ -225,7 +224,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public boolean doCheckUserAction(){
-        if (!bLogin)
+        if (!DataStructure.login)
         {
             gotoActivityForResult(LoginActivity.class, MessageHandler.REQUEST_USER_FRAGMENT);
             return false;

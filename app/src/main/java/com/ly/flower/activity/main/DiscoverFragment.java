@@ -28,6 +28,7 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
 
     private final int GET_DISCOVERY         = 1;
     private final int GET_DISCOVERY_MORE    = 2;
+    private boolean bFirst = true;
 
     private XListView lvDiscoveries;
     private DiscoveriesListAdapter discoveriesListAdapter;
@@ -40,7 +41,10 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     public void onResume()
     {
         super.onResume();
-        lvDiscoveries.setPullLoadEnable(true);
+        if (bFirst)
+            lvDiscoveries.setPullLoadEnable(true);
+        else
+            lvDiscoveries.setPullLoadEnable(false);
     }
 
     @Override
@@ -74,7 +78,10 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
 
     @Override
     public void getData() {
-        lvDiscoveries.startRefresh();
+        if(bFirst){
+            lvDiscoveries.startRefresh();
+            bFirst = false;
+        }
     }
 
     @Override
@@ -104,8 +111,12 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
         try {
             JSONObject object = new JSONObject(new String(responsebody));
             JSONArray array = object.getJSONArray("data");
-
             discoveriesListAdapter.setData(array);
+            if (array.length() >= 20) {
+                lvDiscoveries.setPullLoadEnable(true);
+            } else {
+                lvDiscoveries.setPullLoadEnable(false);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
