@@ -63,7 +63,7 @@ public class BaseListAdapter extends android.widget.BaseAdapter{
         try {
             for (int i = 0; i < array.length(); i++)
             {
-                this.array.put(array.getJSONArray(i));
+                this.array.put(array.getJSONObject(i));
             }
         } catch (JSONException e) {
             e.printStackTrace();
