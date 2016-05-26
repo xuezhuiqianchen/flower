@@ -203,12 +203,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         ivHome.setImageResource(R.drawable.home_select_icon);
         showFragment(HomeFragment.TAG);
         setTitle(R.string.str_club);
+        displayTitleLayout();
     }
 
     public void doCheckDiscoveryAction(){
         ivDiscovery.setImageResource(R.drawable.discovery_select_icon);
         showFragment(DiscoverFragment.TAG);
         setTitle(R.string.str_discover);
+        hideTitleLayout();
     }
 
     public boolean doCheckMsgAction(){
@@ -220,6 +222,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         ivMsg.setImageResource(R.drawable.msg_select_icon);
         showFragment(MsgFragment.TAG);
         setTitle(R.string.str_msg);
+        displayTitleLayout();
         return true;
     }
 
@@ -232,6 +235,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         ivUser.setImageResource(R.drawable.user_select_icon);
         showFragment(UserFragment.TAG);
         setTitle(R.string.str_me);
+        displayTitleLayout();
         return true;
     }
 }

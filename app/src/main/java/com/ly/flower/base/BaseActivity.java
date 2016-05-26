@@ -120,6 +120,10 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         layoutTitle.setVisibility(View.GONE);
     }
 
+    public void displayTitleLayout() {
+        layoutTitle.setVisibility(View.VISIBLE);
+    }
+
     public void setTitleLayoutBkColor(int rid){
         layoutTitle.setBackgroundColor(getResources().getColor(rid));
     }
