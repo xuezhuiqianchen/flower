@@ -91,7 +91,7 @@ public class DiscoveryViewHolder {
         rlShare = (RelativeLayout) llEditBar.findViewById(R.id.rl_share);
     }
 
-    public void initData(final BaseActivity activity, JSONObject object)
+    public void initData(final BaseActivity activity, final JSONObject object, final Handler handler)
     {
         rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(activity, 100));
         try {
@@ -161,13 +161,7 @@ public class DiscoveryViewHolder {
             rlPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!DataStructure.login)
-                        return;
-                    if (strIsPraise.equals("0")) {
-                        ivPraise.setImageResource(R.drawable.praise_press_icon);
-                    } else {
-                        ivPraise.setImageResource(R.drawable.praise_icon);
-                    }
+                    praiseAction(activity, handler, object);
                 }
             });
 
@@ -212,7 +206,29 @@ public class DiscoveryViewHolder {
         vMediaPlayerController.setVisibility(View.GONE);
     }
 
-    private void userOperation(final BaseActivity activity, final Handler handler,
+    private void praiseAction(BaseActivity activity, Handler handler, JSONObject object){
+        if (!DataStructure.login)
+            return;
+        String osubtype = "";
+        String ctype = "";
+        String sid = "";
+        try {
+            osubtype = object.getString("bpraise");
+            ctype = object.getString("type");
+            sid = object.getString("sid");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (osubtype.equals("0")) {
+            osubtype = "1";
+        } else {
+            osubtype = "0";
+        }
+        praiseNetOperation(activity, handler, osubtype, ctype, sid);
+    }
+
+
+    private void praiseNetOperation(final BaseActivity activity, final Handler handler,
                                final String osubtype, final String ctype, final String sid)
     {
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(activity, AscynHttpUtil.URL_USER_OPERATION);
