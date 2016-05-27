@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class StringUtils {
 
+
     /**
      *  string to MD5
      *
@@ -18,7 +19,9 @@ public class StringUtils {
      * @return
      */
     public static String stringToMD5(String string) {
-        byte[] hash;
+        byte[]  hash;
+
+
 
         try {
             hash = MessageDigest.getInstance("MD5").digest(string.getBytes("UTF-8"));
