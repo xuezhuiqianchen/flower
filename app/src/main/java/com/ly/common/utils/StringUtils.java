@@ -8,9 +8,9 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by admin on 2016/4/5.
+ *
  */
 public class StringUtils {
-
 
     /**
      *  string to MD5
@@ -20,8 +20,6 @@ public class StringUtils {
      */
     public static String stringToMD5(String string) {
         byte[]  hash;
-
-
 
         try {
             hash = MessageDigest.getInstance("MD5").digest(string.getBytes("UTF-8"));
