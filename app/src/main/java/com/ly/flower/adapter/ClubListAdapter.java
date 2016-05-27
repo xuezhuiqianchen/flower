@@ -1,11 +1,15 @@
 package com.ly.flower.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ly.flower.R;
 import com.ly.flower.base.BaseActivity;
+import com.ly.flower.share.MessageHandler;
 import com.ly.flower.viewholder.DiscoveryViewHolder;
 import com.ly.flower.viewholder.FootprintTitleViewHolder;
 import com.ly.flower.viewholder.FootprintViewHolder;
@@ -28,6 +32,17 @@ public class ClubListAdapter extends BaseListAdapter{
     private static final int TYPE_COUNT = 4;
     private int type = TYPE_FOOTPRINT;
 
+    private Handler mHandler = new Handler(){
+        public void handleMessage(Message msg) {
+            Bundle data = msg.getData();
+            switch (msg.what) {
+                case MessageHandler.PRISE_OPERATION:
+//                    praiseOperation(data.getString("cid"), data.getString("osubtype"));
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     public ClubListAdapter(LayoutInflater inflater) {
         super(inflater);
@@ -117,7 +132,7 @@ public class ClubListAdapter extends BaseListAdapter{
                 break;
 
             case TYPE_TOPIC:
-                discoveryViewHolder.initData(activity, (JSONObject)getItem(position));
+                discoveryViewHolder.initData(activity, (JSONObject)getItem(position), mHandler);
                 break;
 
             case TYPE_MEMBER:

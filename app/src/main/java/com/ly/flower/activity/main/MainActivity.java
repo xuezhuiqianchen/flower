@@ -200,6 +200,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void doCheckAddAction(){
+        /**
+         * 取截图；模糊处理；动画
+         */
+
     }
 
     public void doCheckHomeAction(){
