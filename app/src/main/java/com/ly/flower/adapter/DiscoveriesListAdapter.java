@@ -57,7 +57,7 @@ public class DiscoveriesListAdapter extends BaseListAdapter {
             discoveryViewHolder = (DiscoveryViewHolder) convertView.getTag();
         }
 
-        discoveryViewHolder.initData(activity, (JSONObject) getItem(position));
+        discoveryViewHolder.initData(activity, (JSONObject) getItem(position), mHandler);
         return convertView;
     }
 
