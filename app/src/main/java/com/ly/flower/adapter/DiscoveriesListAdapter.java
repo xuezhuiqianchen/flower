@@ -1,12 +1,16 @@
 package com.ly.flower.adapter;
 
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ly.flower.R;
 import com.ly.flower.activity.main.MainActivity;
 import com.ly.flower.base.BaseActivity;
+import com.ly.flower.share.MessageHandler;
 import com.ly.flower.viewholder.DiscoveryViewHolder;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +27,18 @@ public class DiscoveriesListAdapter extends BaseListAdapter {
 
     private JSONArray recommendArray = new JSONArray();
     private JSONArray newestArray = new JSONArray();
+
+    private Handler mHandler = new Handler(){
+        public void handleMessage(Message msg) {
+            Bundle data = msg.getData();
+            switch (msg.what) {
+                case MessageHandler.PRISE_OPERATION:
+                    praiseOperation(data.getString("cid"), data.getString("osubtype"));
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     public DiscoveriesListAdapter(LayoutInflater inflater) {
         super(inflater);
@@ -50,8 +66,11 @@ public class DiscoveriesListAdapter extends BaseListAdapter {
         this.activity = activity;
     }
 
-    public void modifyPraiseMode(String cid, String bpraise) {
-
+    public void praiseOperation(String cid, String osubtype) {
+        recommendArray = changeData(recommendArray, cid, osubtype);
+        newestArray = changeData(newestArray, cid, osubtype);
+        array = changeData(array, cid, osubtype);
+        notifyDataSetChanged();
     }
 
     public void setData(JSONArray array, int type) {
@@ -82,5 +101,28 @@ public class DiscoveriesListAdapter extends BaseListAdapter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private JSONArray changeData(JSONArray array, String cid, String osubtype)
+    {
+        try {
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                if (object.getString("sid").equals(cid)) {
+                    int cpraise = Integer.valueOf(object.getString("cpraise"));
+                    if (osubtype.equals("0")) {
+                        cpraise--;
+                    }else {
+                        cpraise++;
+                    }
+                    object.put("cpraise", String.valueOf(cpraise));
+                    object.put("bpraise", osubtype);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return array;
     }
 }
