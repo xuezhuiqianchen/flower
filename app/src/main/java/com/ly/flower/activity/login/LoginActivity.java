@@ -2,6 +2,7 @@ package com.ly.flower.activity.login;
 
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -21,6 +22,11 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener
 import com.umeng.socialize.exception.SocializeException;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Map;
 import cz.msebera.android.httpclient.Header;
 
@@ -155,13 +161,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     {
         try {
             JSONObject object = new JSONObject(new String(responsebody)).getJSONObject("data");
+
             DataStructure.uid = object.getString("uid");
             DataStructure.passwd = object.getString("passwd");
+            GlobalStatic.saveSharedString(mInstance, GlobalStatic.LOGIN, "1");
             GlobalStatic.saveSharedString(mInstance, GlobalStatic.UID, DataStructure.uid);
-            GlobalStatic.saveSharedString(mInstance, DataStructure.uid, object.toString());
+            GlobalStatic.saveSharedString(mInstance, GlobalStatic.PASSWORD, DataStructure.passwd);
 
             showInfoMessage(R.string.tip_login_success);
-
             setResult(MessageHandler.RESULT_OK);
             finish();
         } catch (JSONException e) {
