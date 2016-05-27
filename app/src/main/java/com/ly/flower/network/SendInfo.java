@@ -5,6 +5,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
 
+import com.ly.common.utils.StringUtils;
+import com.ly.flower.base.BaseFunction;
+import com.ly.flower.base.DataStructure;
+
 public class SendInfo {
 	/**
 	 * 获取发现内容列表
@@ -657,11 +661,8 @@ public class SendInfo {
 	{
 		JSONObject object = new JSONObject();
 		try {
-			String passwd = "888888";
-//			object.put("uid", DataStructure.uid);
-//			object.put("passwd", DataStructure.passwd);
-			object.put("uid", "6");
-			object.put("passwd", "8ddcff3a80f4189ca1c9d4d902c3c909");//BaseFunction.stringToMD5(passwd)
+			object.put("uid", DataStructure.uid);
+			object.put("passwd", DataStructure.passwd);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

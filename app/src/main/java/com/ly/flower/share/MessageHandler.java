@@ -27,11 +27,11 @@ public class MessageHandler {
 	public static final int REQUEST_CODE_SELECT_BKG							= 31;
 
 
-
+	public static final int PRISE_OPERATION									= 41;
 	
 	
-	public static final int FILE														= 61;
-	public static final int IMAGE													= 62;
+	public static final int FILE											= 61;
+	public static final int IMAG											= 62;
 	
 	public static final int LIST_DIALOG_CHECK							= 101;
 
