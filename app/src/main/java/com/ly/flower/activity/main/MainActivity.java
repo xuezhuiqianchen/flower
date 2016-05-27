@@ -71,25 +71,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         initMenuView();
         rlContent = (RelativeLayout) this.findViewById(R.id.rl_content);
         initFragments();
-        showFragment(HomeFragment.TAG);
+        showFragment(discoverFragment.TAG);
     }
 
-    private void fillView()
-    {
-        setTitle(R.string.str_club);
-        DataStructure.login = true;
+    private void fillView() {
+        setTitle(R.string.str_discover);
+        hideTitleLayout();
+        DataStructure.login = false;
     }
 
-    private void initFragments()
-    {
+    private void initFragments() {
         homeFragment = new HomeFragment(mInstance, inflater);
         discoverFragment = new DiscoverFragment(mInstance, inflater);
         msgFragment = new MsgFragment(mInstance, inflater);
         userFragment = new UserFragment(mInstance, inflater);
     }
 
-    private void initMenuView()
-    {
+    private void initMenuView() {
         rlHome = (RelativeLayout) this.findViewById(R.id.rl_home);
         rlDiscovery = (RelativeLayout) this.findViewById(R.id.rl_discover);
         rlAdd = (RelativeLayout) this.findViewById(R.id.rl_add);
@@ -108,11 +106,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         rlMsg.setOnClickListener(this);
         rlUser.setOnClickListener(this);
 
-        checkId = R.id.rl_home;
+        checkId = R.id.rl_discover;
     }
 
-    private void showFragment(String tag)
-    {
+    private void showFragment(String tag) {
         if (rlContent.getTag() == tag) {
             return;
         }
@@ -150,16 +147,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         rlContent.setTag(tag);
     }
 
-    private void resetCheckedView()
-    {
+    private void resetCheckedView() {
         ivHome.setImageResource(R.drawable.home_icon);
         ivDiscovery.setImageResource(R.drawable.discovery_icon);
         ivMsg.setImageResource(R.drawable.msg_icon);
         ivUser.setImageResource(R.drawable.user_icon);
     }
 
-    public void setChecked(int id)
-    {
+    public void setChecked(int id) {
         if (checkId == id)
             return;
 

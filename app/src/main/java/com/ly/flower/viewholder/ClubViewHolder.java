@@ -1,17 +1,14 @@
 package com.ly.flower.viewholder;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.ly.common.utils.Common;
 import com.ly.common.utils.DimensionUtils;
 import com.ly.flower.R;
-
+import com.ly.flower.base.BaseActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 /**
  * Created by admin on 2016/3/15.
  */;import org.json.JSONException;
@@ -31,9 +28,9 @@ public class ClubViewHolder {
         rivImage = (RoundedImageView) parentView.findViewById(R.id.riv_image);
     }
 
-    public void initData(Context context, JSONObject object)
+    public void initData(BaseActivity activity, JSONObject object)
     {
-        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(context, 100));
+        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(activity, 100));
         try {
             String strPortrait = object.getString("url_logo");
             String strBkUrl = object.getString("url_bk");
@@ -47,7 +44,7 @@ public class ClubViewHolder {
                 int imgWidth = Integer.valueOf(strWidth);
                 int imgHeight = Integer.valueOf(strLength);
 
-                int relWidth = Common.DEVICE_SCREEN_WIDTH - DimensionUtils.dip2px(context, 20);
+                int relWidth = Common.DEVICE_SCREEN_WIDTH - DimensionUtils.dip2px(activity, 20);
                 int relHeight = imgHeight * relWidth / imgWidth;
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(relWidth, relHeight);
                 layoutParams.addRule(RelativeLayout.BELOW, R.id.tv_member);
@@ -59,9 +56,9 @@ public class ClubViewHolder {
 
             tvTitle.setText(strTitle);
             tvNum.setText(strNum);
-            ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
-            ImageLoader.getInstance().displayImage(strBkUrl, rivImage);
 
+            activity.imageLoader.displayImage(strPortrait, rivPortrait, activity.portraitOptions);
+            activity.imageLoader.displayImage(strBkUrl, rivImage, activity.imageOptions);
         } catch (JSONException e) {
             e.printStackTrace();
         }

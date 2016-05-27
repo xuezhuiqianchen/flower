@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.ly.flower.viewholder.ClubViewHolder;
 import org.json.JSONObject;
 
@@ -12,7 +13,7 @@ import org.json.JSONObject;
  * Created by admin on 2016/3/16.
  */
 public class HomeListAdapter extends BaseListAdapter {
-    private Context context;
+    private BaseActivity activity;
 
     public HomeListAdapter(LayoutInflater inflater) {
         super(inflater);
@@ -29,12 +30,12 @@ public class HomeListAdapter extends BaseListAdapter {
         }else {
             clubViewHolder = (ClubViewHolder) convertView.getTag();
         }
-        clubViewHolder.initData(context, (JSONObject)getItem(position));
+        clubViewHolder.initData(activity, (JSONObject)getItem(position));
         return convertView;
     }
 
-    public void setContext(Context context)
+    public void setContext(BaseActivity activity)
     {
-        this.context = context;
+        this.activity = activity;
     }
 }

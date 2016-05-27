@@ -26,7 +26,7 @@
     <RadioGroup
         android:id="@+id/rg_menu"
         android:layout_width="match_parent"
-        android:layout_height="44.5dp"
+        android:layout_height="39.5dp"
         android:layout_toRightOf="@id/iv_back"
         android:layout_toLeftOf="@id/iv_edit"
         android:layout_marginLeft="20dp"

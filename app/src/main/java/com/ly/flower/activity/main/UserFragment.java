@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.ResponseHandlerInterface;
 import com.ly.common.utils.DimensionUtils;
 import com.ly.flower.R;
 import com.ly.flower.activity.user.MySuggestActivity;
@@ -14,15 +16,21 @@ import com.ly.flower.activity.user.MyCommentActivity;
 import com.ly.flower.activity.user.MyTopicActivity;
 import com.ly.flower.activity.user.UserInfoActivity;
 import com.ly.flower.base.BaseFragment;
+import com.ly.flower.base.BaseFunction;
 import com.ly.flower.memory.GlobalStatic;
 import com.ly.flower.base.DataStructure;
+import com.ly.flower.network.AscynHttpUtil;
+import com.ly.flower.network.SendInfo;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by admin on 2016/3/15.
@@ -36,6 +44,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
     private final static int[] STRING_ID_LIST = {R.string.str_my_topic, R.string.str_my_comment,
             R.string.str_my_suggest, R.string.str_setting};
 
+    private JSONObject userObject;
 
     private RelativeLayout rlUserInfo;
     private RoundedImageView rivPortrait;
@@ -68,23 +77,12 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     public void getData() {
+        getUserInfo();
     }
 
     @Override
     public void refreshView() {
         rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(mInstance, 100));
-        String strUserInfo = GlobalStatic.getSharedString(mInstance, DataStructure.uid);
-        try {
-            JSONObject object = new JSONObject(strUserInfo);
-            String strPortrait = object.getString("avatar");
-            tvNickname.setText(object.getString("nickname"));
-            tvHometown.setText(object.getString("hometown"));
-            tvNum.setText("NO." + object.getString("number"));
-
-            ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     private void initListView()
@@ -119,7 +117,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
         switch (v.getId())
         {
             case R.id.rl_user_info:
-                mInstance.gotoActivity(UserInfoActivity.class);
+                mInstance.gotoActivity(UserInfoActivity.class, userObject.toString());
                 break;
 
             case R.id.v_my_topic:
@@ -138,5 +136,59 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
                 mInstance.gotoActivity(SettingActivity.class);
                 break;
         }
+    }
+
+    private void getUserInfo()
+    {
+        String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance, AscynHttpUtil.URL_EDIT_USER_INFO);
+        String strInfo = SendInfo.getUserInfoSendInfo(mInstance);
+        mInstance.showProgressBar(R.string.tip_geting);
+        AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler());
+    }
+
+    private void cbGetUserInfo(byte[] responsebody)
+    {
+        try {
+            userObject = new JSONObject(new String(responsebody)).getJSONObject("data");
+            refreshBaseInfo();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ResponseHandlerInterface getResponseHandler()
+    {
+        return new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int arg0, Header[] headers, byte[] responsebody) {
+                mInstance.dismissProgressBar();
+                if (BaseFunction.verifyResult(new String(responsebody), mInstance.clSnackContainer)) {
+                    cbGetUserInfo(responsebody);
+                }
+            }
+
+            @Override
+            public void onFailure(int arg0, Header[] headers, byte[] responsebody, Throwable err) {
+                mInstance.dismissProgressBar();
+            }
+        };
+    }
+
+    private void refreshBaseInfo()
+    {
+        try {
+            String strPortrait = userObject.getString("avatar");
+            String strNickName = userObject.getString("nickname");
+            String strNum = userObject.getString("number");
+            String strHometown = userObject.getString("hometown");
+
+            tvHometown.setText(strHometown);
+            tvNickname.setText(strNickName);
+            tvNum.setText("NO." + strNum);
+            mInstance.imageLoader.displayImage(strPortrait, rivPortrait, mInstance.portraitOptions);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

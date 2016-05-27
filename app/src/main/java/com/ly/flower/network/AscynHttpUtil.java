@@ -19,9 +19,11 @@ public class AscynHttpUtil {
 	private static AsyncHttpClient httpsclient = new AsyncHttpClient();
 
 	public static final String VERSION_1 						= "1";
+	public static final String VERSION_2 						= "1";
 	public static final String SERVER_HOST						= "https://www.sunflowerslove.cn/api";
 	public static final String BLS_HEAD							= "/bls/" + VERSION_1;
-	public static final String DISCOVER_HEAD					= "/discover/" + VERSION_1;
+	public static final String DISCOVER_HEAD1					= "/discover/" + VERSION_1;
+	public static final String DISCOVER_HEAD2					= "/discover/" + VERSION_2;
 	public static final String MSG_HEAD							= "/msg/" + VERSION_1;
 	public static final String MY_HEAD							= "/my/" + VERSION_1;
 	public static final String SHARE_HEAD						= "/share";
@@ -33,7 +35,7 @@ public class AscynHttpUtil {
 	public static final String URL_SHARE_HISTORY				= SHARE_HEAD + "/sharehistory?";
 	public static final String URL_SHARE_TOPIC					= SHARE_HEAD + "/sharetopic?";
 
-	public static final String URL_DISCOVER_GET_LIST			= DISCOVER_HEAD + "/get_list";
+	public static final String URL_DISCOVER_GET_LIST			= DISCOVER_HEAD2 + "/get_list";
 	public static final String URL_MSG_GET_NEW_MSG				= MSG_HEAD + "/get_new_msg";
 
 	public static final String URL_GET_MY_TOPIC_LIST			= MY_HEAD + "/get_topic_list";

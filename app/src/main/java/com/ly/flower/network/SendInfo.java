@@ -9,19 +9,21 @@ public class SendInfo {
 	/**
 	 * 获取发现内容列表
 	 {
+	 "type"=""  0推荐 1最新
 	 "uid": "用户id",
 	 "passwd": "密码",
 	 "count": "取的数量"
-	 "page": "0:首次;1；"
-	 "topic": {}"内容字典，分页时用，page > 0时才会传"
+	 "page": ""
+	 "topic": "内容字典，最后一个结果的json对象，分页时用，page > 0时才会传"
 	 }
 	 * @return
 	 */
 	public static String getListOfDiscoverSendInfo(Context context, String count, String page,
-												   JSONObject topic)
+												   String type, JSONObject topic)
 	{
 		JSONObject object = getUserUnit(context);
 		try {
+			object.put("type", type);
 			object.put("page", page);
 			object.put("topic", topic);
 			object.put("count", count);

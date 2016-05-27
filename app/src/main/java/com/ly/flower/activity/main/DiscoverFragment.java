@@ -3,6 +3,7 @@ package com.ly.flower.activity.main;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.ResponseHandlerInterface;
@@ -22,14 +23,19 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by admin on 2016/3/15.
  */
-public class DiscoverFragment extends BaseFragment implements XListView.IXListViewListener{
+public class DiscoverFragment extends BaseFragment implements XListView.IXListViewListener, RadioGroup.OnCheckedChangeListener {
     public final static String TAG = "DiscoveryFragment";
 
-
+    private final int TYPE_RECOMMEND        = 0;
+    private final int TYPE_NEWEST           = 1;
     private final int GET_DISCOVERY         = 1;
     private final int GET_DISCOVERY_MORE    = 2;
-    private boolean bFirst = true;
+    private boolean bFirstRecommend = true;
+    private boolean bFirstNewest = true;
+    private boolean bLoadMoreForRecommend   = false;
+    private boolean isbLoadMoreForNewest    = false;
 
+    private RadioGroup rgMenu;
     private XListView lvDiscoveries;
     private DiscoveriesListAdapter discoveriesListAdapter;
 
@@ -41,17 +47,15 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     public void onResume()
     {
         super.onResume();
-        if (bFirst)
-            lvDiscoveries.setPullLoadEnable(true);
-        else
-            lvDiscoveries.setPullLoadEnable(false);
     }
 
     @Override
     public void initView() {
-        rlFragmentView = (RelativeLayout) inflater.inflate(R.layout.fragment_listview, null);
-        lvDiscoveries = (XListView) rlFragmentView.findViewById(R.id.listView);
+        rlFragmentView = (RelativeLayout) inflater.inflate(R.layout.fragment_discovery, null);
+        rgMenu = (RadioGroup) rlFragmentView.findViewById(R.id.rg_menu);
+        rgMenu.setOnCheckedChangeListener(this);
 
+        lvDiscoveries = (XListView) rlFragmentView.findViewById(R.id.listView);
         discoveriesListAdapter = new DiscoveriesListAdapter(inflater);
         discoveriesListAdapter.setContext(mInstance);
         lvDiscoveries.setAdapter(discoveriesListAdapter);
@@ -78,9 +82,9 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
 
     @Override
     public void getData() {
-        if(bFirst){
+        if(bFirstRecommend){
             lvDiscoveries.startRefresh();
-            bFirst = false;
+            bFirstRecommend = false;
         }
     }
 
@@ -88,33 +92,45 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     public void refreshView() {
     }
 
-    private void getDiscoveriesListData()
-    {
+    private void getDiscoveriesListData(int type) {
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance, AscynHttpUtil.URL_DISCOVER_GET_LIST);
-        String strInfo = SendInfo.getListOfDiscoverSendInfo(mInstance, "20", "0", new JSONObject());
-        AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler(GET_DISCOVERY));
+        String strInfo = SendInfo.getListOfDiscoverSendInfo(mInstance, "20", "0", String.valueOf(type), new JSONObject());
+        AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler(GET_DISCOVERY, type));
     }
 
-    private void getMoreDiscoveriesListData()
-    {
+    private void getMoreDiscoveriesListData(int type) {
         JSONObject object = discoveriesListAdapter.getLastObject();
         if (object == null)
+        {
+            lvDiscoveries.stopLoadMore();
             return;
+        }
 
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance, AscynHttpUtil.URL_DISCOVER_GET_LIST);
-        String strInfo = SendInfo.getListOfDiscoverSendInfo(mInstance, "10", "0", object);
-        AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler(GET_DISCOVERY_MORE));
+        String strInfo = SendInfo.getListOfDiscoverSendInfo(mInstance, "10", "0", String.valueOf(type), object);
+        AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler(GET_DISCOVERY_MORE, type));
     }
 
-    private void cbGetDiscoveriesListData(byte[] responsebody)
-    {
+    private void cbGetDiscoveriesListData(byte[] responsebody, int type) {
         try {
             JSONObject object = new JSONObject(new String(responsebody));
             JSONArray array = object.getJSONArray("data");
-            discoveriesListAdapter.setData(array);
+            discoveriesListAdapter.setData(array, type);
+            if ((rgMenu.getCheckedRadioButtonId() == R.id.rb_recommend && type == TYPE_RECOMMEND)
+                    ||(rgMenu.getCheckedRadioButtonId() == R.id.rb_new && type == TYPE_NEWEST))
+                discoveriesListAdapter.setType(type);
+
             if (array.length() >= 20) {
+                if (type == TYPE_RECOMMEND)
+                    bLoadMoreForRecommend = true;
+                else
+                    isbLoadMoreForNewest = true;
                 lvDiscoveries.setPullLoadEnable(true);
             } else {
+                if (type == TYPE_RECOMMEND)
+                    bLoadMoreForRecommend = false;
+                else
+                    isbLoadMoreForNewest = false;
                 lvDiscoveries.setPullLoadEnable(false);
             }
         } catch (JSONException e) {
@@ -122,18 +138,21 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
         }
     }
 
-    private void cbGetMoreDiscoveriesListData(byte[] responsebody)
+    private void cbGetMoreDiscoveriesListData(byte[] responsebody, int type)
     {
         try {
             JSONObject object = new JSONObject(new String(responsebody));
             JSONArray array = object.getJSONArray("data");
-            discoveriesListAdapter.addData(array);
+            discoveriesListAdapter.addData(array, type);
+            if ((rgMenu.getCheckedRadioButtonId() == R.id.rb_recommend && type == TYPE_RECOMMEND)
+                    ||(rgMenu.getCheckedRadioButtonId() == R.id.rb_new && type == TYPE_NEWEST))
+                discoveriesListAdapter.setType(type);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private ResponseHandlerInterface getResponseHandler(final int type)
+    private ResponseHandlerInterface getResponseHandler(final int type, final int discoveryType)
     {
         return new AsyncHttpResponseHandler() {
             @Override
@@ -144,11 +163,11 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
                     switch (type)
                     {
                         case GET_DISCOVERY:
-                            cbGetDiscoveriesListData(responsebody);
+                            cbGetDiscoveriesListData(responsebody, discoveryType);
                             break;
 
                         case GET_DISCOVERY_MORE:
-                            cbGetMoreDiscoveriesListData(responsebody);
+                            cbGetMoreDiscoveriesListData(responsebody, discoveryType);
                             break;
                     }
                 }
@@ -162,53 +181,34 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
         };
     }
 
-    private JSONArray testData()
-    {
-        JSONArray array = new JSONArray();
-        JSONObject object = new JSONObject();
-        try {
-            object.put("cid", "cid");
-            object.put("cname", "元子");
-            object.put("cavatar", "");
-            object.put("type", "0");
-            object.put("ctype", "0");
-            object.put("url_video", "cid");
-            object.put("time", "2016/03/18 16:49:58");
-            object.put("sid", "cid");
-            object.put("title", "探索新的Android Material Design支持库");
-            object.put("sub_title", "我是Material Design的粉丝，它使应用程序更具有)");
-            object.put("ccomment", "34");
-            object.put("cpraise", "4");
-            object.put("uid", "2");
-            object.put("uavatar", "http:\\/\\/www.sunflowerslove.cn\\/ImageService\\/ImageLibrary\\/20160219\\/84cf4991-7c04-43d3-a167-2dfc739102cf.jpg");
-            object.put("uname", "melody");
-            object.put("bbound", "cid");
-            object.put("mid", "cid");
-            object.put("mname", "cid");
-            object.put("mavatar", "cid");
-            object.put("bpraise", "0");
-
-            JSONArray imageArray = new JSONArray();
-            JSONObject imageObject = new JSONObject();
-            imageObject.put("url", "http:\\/\\/www.sunflowerslove.cn\\/ImageService\\/ImageLibrary\\/20160303\\/8ae650d1-f1a5-4176-b549-d256113843b0.jp");
-            imageArray.put(imageObject);
-            imageArray.put(imageObject);
-            object.put("img", imageArray);
-            array.put(object);
-            array.put(object);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return array;
-    }
-
     @Override
     public void onRefresh() {
-        getDiscoveriesListData();
+        if (rgMenu.getCheckedRadioButtonId() == R.id.rb_recommend)
+            getDiscoveriesListData(TYPE_RECOMMEND);
+        else
+            getDiscoveriesListData(TYPE_NEWEST);
     }
 
     @Override
     public void onLoadMore() {
-        getMoreDiscoveriesListData();
+        if (rgMenu.getCheckedRadioButtonId() == R.id.rb_recommend)
+            getMoreDiscoveriesListData(TYPE_RECOMMEND);
+        else
+            getMoreDiscoveriesListData(TYPE_NEWEST);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (rgMenu.getCheckedRadioButtonId() == R.id.rb_recommend){
+            discoveriesListAdapter.setType(TYPE_RECOMMEND);
+            lvDiscoveries.setPullLoadEnable(bLoadMoreForRecommend);
+        }else {
+            if(bFirstNewest){
+                lvDiscoveries.startRefresh();
+                bFirstNewest = false;
+            }
+            discoveriesListAdapter.setType(TYPE_NEWEST);
+            lvDiscoveries.setPullLoadEnable(isbLoadMoreForNewest);
+        }
     }
 }

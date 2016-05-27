@@ -49,7 +49,7 @@
         android:layout_toRightOf="@+id/tv_member"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
-        android:textColor="#4d90a8"
+        android:textColor="@color/text_blue_light"
         android:textSize="13dp"/>
 
     <com.makeramen.roundedimageview.RoundedImageView

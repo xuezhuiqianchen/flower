@@ -10,7 +10,7 @@ import android.os.Handler;
 
 public class DataStructure {
 	public static String[] strTime = null;
-	public static boolean login = true;
+	public static boolean login = false;
 
 	public static String uid = "6";
 	public static String passwd = "8ddcff3a80f4189ca1c9d4d902c3c909";

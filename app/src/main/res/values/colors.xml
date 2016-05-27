@@ -10,7 +10,7 @@
     <color name="text_theme">#dd000000</color>
     <color name="text_gray">#4d4d4d</color>
     <color name="text_gray_light">#aaaaaa</color>
-    <color name="text_blue_light">#3F51B5</color>
+    <color name="text_blue_light">#4d90a8</color>
     <color name="divider">#c2c2c2</color>
     <color name="bg_gray_light">#f1f1f1</color>
 
@@ -21,4 +21,5 @@
     <color name="seventy_black">#b2000000</color>
     <color name="half_white">#7FFFFFFF</color>
     <color name="twenty_white">#33FFFFFF</color>
+    <color name="pink">#FF656b</color>
 </resources>

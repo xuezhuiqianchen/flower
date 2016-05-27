@@ -13,6 +13,7 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     public void init() {
         setView(R.layout.activity_welcome);
+        hideTitleLayout();
         thrJump();
     }
 

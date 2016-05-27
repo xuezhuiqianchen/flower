@@ -2,6 +2,7 @@ package com.ly.flower.base;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.design.widget.CoordinatorLayout;
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,6 +17,10 @@ import com.ly.common.utils.Common;
 import com.ly.common.utils.UMSharePlatformUtil;
 import com.ly.flower.R;
 import com.ly.flower.component.ColoredSnackbar;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.umeng.message.PushAgent;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -33,6 +38,8 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     public CoordinatorLayout clSnackContainer;
     public UMSharePlatformUtil umSharePlatformUtil;
+    public ImageLoader imageLoader;
+    public DisplayImageOptions imageOptions, portraitOptions;
 
     public abstract void init();
 
@@ -40,7 +47,45 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PushAgent.getInstance(this).onAppStart();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(this));
+        imageOptions = new DisplayImageOptions.Builder()
+                 .showImageOnLoading(R.drawable.default_image) // 设置图片在下载期间显示的图片
+                .showImageForEmptyUri(R.drawable.default_image)// 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.drawable.default_image) // 设置图片加载/解码过程中错误时候显示的图片
+                .cacheInMemory(true)// 设置下载的图片是否缓存在内存中
+                 .cacheOnDisk(true)// 设置下载的图片是否缓存在SD卡中
+                // .considerExifParams(true) // 是否考虑JPEG图像EXIF参数（旋转，翻转）
+                .imageScaleType(ImageScaleType.EXACTLY)// 设置图片以如何的编码方式显示
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置图片的解码类型
+                // .decodingOptions(BitmapFactory.Options
+                // decodingOptions)//设置图片的解码配置
+                .delayBeforeLoading(0)// int delayInMillis为你设置的下载前的延迟时间
+                // 设置图片加入缓存前，对bitmap进行设置
+                // .preProcessor(BitmapProcessor preProcessor)
+                .resetViewBeforeLoading(true)// 设置图片在下载前是否重置，复位
+                //.displayer(new RoundedBitmapDisplayer(0))// 不推荐用！！！！是否设置为圆角，弧度为多少
+                //.displayer(new FadeInBitmapDisplayer(100))// 是否图片加载好后渐入的动画时间，可能会出现闪动
+                .build();
 
+        portraitOptions = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.default_portrait) // 设置图片在下载期间显示的图片
+                .showImageForEmptyUri(R.drawable.default_portrait)// 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.drawable.default_portrait) // 设置图片加载/解码过程中错误时候显示的图片
+                .cacheInMemory(true)// 设置下载的图片是否缓存在内存中
+                .cacheOnDisk(true)// 设置下载的图片是否缓存在SD卡中
+                // .considerExifParams(true) // 是否考虑JPEG图像EXIF参数（旋转，翻转）
+                .imageScaleType(ImageScaleType.EXACTLY)// 设置图片以如何的编码方式显示
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置图片的解码类型
+                // .decodingOptions(BitmapFactory.Options
+                // decodingOptions)//设置图片的解码配置
+                .delayBeforeLoading(0)// int delayInMillis为你设置的下载前的延迟时间
+                // 设置图片加入缓存前，对bitmap进行设置
+                // .preProcessor(BitmapProcessor preProcessor)
+                .resetViewBeforeLoading(true)// 设置图片在下载前是否重置，复位
+                //.displayer(new RoundedBitmapDisplayer(0))// 不推荐用！！！！是否设置为圆角，弧度为多少
+                //.displayer(new FadeInBitmapDisplayer(100))// 是否图片加载好后渐入的动画时间，可能会出现闪动
+                .build();
         umSharePlatformUtil = new UMSharePlatformUtil(this, Common.UM_APP_KET,
                 Common.WX_APP_ID, Common.WX_APP_KEY, Common.QQ_APP_ID, Common.QQ_APP_KEY);
         init();

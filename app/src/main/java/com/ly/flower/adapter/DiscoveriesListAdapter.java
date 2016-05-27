@@ -1,13 +1,14 @@
 package com.ly.flower.adapter;
 
-import android.content.Context;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.ly.flower.R;
+import com.ly.flower.activity.main.MainActivity;
+import com.ly.flower.base.BaseActivity;
 import com.ly.flower.viewholder.DiscoveryViewHolder;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,7 +16,13 @@ import org.json.JSONObject;
  * Created by admin on 2016/3/18.
  */
 public class DiscoveriesListAdapter extends BaseListAdapter {
-    private Context context;
+    private MainActivity activity;
+    private final int TYPE_RECOMMENT    = 0;
+    private final int TYPE_NEWEST       = 1;
+    private int type = TYPE_RECOMMENT;
+
+    private JSONArray recommendArray = new JSONArray();
+    private JSONArray newestArray = new JSONArray();
 
     public DiscoveriesListAdapter(LayoutInflater inflater) {
         super(inflater);
@@ -34,22 +41,46 @@ public class DiscoveriesListAdapter extends BaseListAdapter {
             discoveryViewHolder = (DiscoveryViewHolder) convertView.getTag();
         }
 
-        discoveryViewHolder.initData(context, (JSONObject) getItem(position));
+        discoveryViewHolder.initData(activity, (JSONObject) getItem(position));
         return convertView;
     }
 
-    public void setContext(Context context)
+    public void setContext(MainActivity activity)
     {
-        this.context = context;
+        this.activity = activity;
     }
 
-    public JSONObject getLastObject()
-    {
+    public void modifyPraiseMode(String cid, String bpraise) {
+
+    }
+
+    public void setData(JSONArray array, int type) {
+        if (TYPE_RECOMMENT == type)
+            this.recommendArray = array;
+        else
+            this.newestArray = array;
+    }
+
+    public void setType(int type) {
+        if (TYPE_RECOMMENT == type)
+            array = recommendArray;
+        else
+            array = newestArray;
+        this.type = type;
+        notifyDataSetChanged();
+    }
+
+    public void addData(JSONArray array, int type) {
         try {
-            return array.getJSONObject(array.length() - 1);
+            for (int i = 0; i < array.length(); i++)
+            {
+                if (TYPE_RECOMMENT == type)
+                    recommendArray.put(array.getJSONObject(i));
+                else
+                    newestArray.put(array.getJSONObject(i));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

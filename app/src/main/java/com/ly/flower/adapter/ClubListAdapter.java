@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.ly.flower.viewholder.DiscoveryViewHolder;
 import com.ly.flower.viewholder.FootprintTitleViewHolder;
 import com.ly.flower.viewholder.FootprintViewHolder;
@@ -16,7 +17,7 @@ import org.json.JSONObject;
  * Created by admin on 2016/3/24.
  */
 public class ClubListAdapter extends BaseListAdapter{
-    private Context context;
+    private BaseActivity activity;
 
     public static final int TYPE_FOOTPRINT_TITLE   = 0;
     public static final int TYPE_FOOTPRINT         = 1;
@@ -116,11 +117,11 @@ public class ClubListAdapter extends BaseListAdapter{
                 break;
 
             case TYPE_TOPIC:
-                discoveryViewHolder.initData(context, (JSONObject)getItem(position));
+                discoveryViewHolder.initData(activity, (JSONObject)getItem(position));
                 break;
 
             case TYPE_MEMBER:
-                memberViewHolder.initData(context, (JSONObject)getItem(position));
+                memberViewHolder.initData(activity, (JSONObject)getItem(position));
                 break;
         }
 
@@ -134,8 +135,8 @@ public class ClubListAdapter extends BaseListAdapter{
         notifyDataSetChanged();
     }
 
-    public void setContext(Context context)
+    public void setContext(BaseActivity activity)
     {
-        this.context = context;
+        this.activity = activity;
     }
 }
