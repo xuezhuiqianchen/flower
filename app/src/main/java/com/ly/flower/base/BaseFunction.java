@@ -10,12 +10,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.EditText; 
 import android.widget.Toast;
+
+import com.ly.flower.component.ColoredSnackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,8 +35,8 @@ public class BaseFunction {
 				return true;
 			}else {
 				String description = object.getString("description");
-//				Snackbar snackbar = Snackbar.make(view, description, Snackbar.LENGTH_SHORT);
-//				ColoredSnackbar.alert(snackbar).show();
+				Snackbar snackbar = Snackbar.make(view, description, Snackbar.LENGTH_SHORT);
+				ColoredSnackbar.alert(snackbar).show();
 				return false;
 			}
 		} catch (JSONException e) {

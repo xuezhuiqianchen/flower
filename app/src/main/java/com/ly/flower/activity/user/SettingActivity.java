@@ -8,6 +8,7 @@ import com.ly.flower.R;
 import com.ly.flower.activity.login.WelcomeActivity;
 import com.ly.flower.base.BaseActivity;
 import com.ly.flower.base.DataStructure;
+import com.ly.flower.memory.GlobalStatic;
 
 /**
  * Created by admin on 2016/3/25.
@@ -70,6 +71,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private void logout() {
         DataStructure.login = false;
+        GlobalStatic.saveSharedString(this, GlobalStatic.LOGIN, "0");
         gotoActivityAndFinish(WelcomeActivity.class);
     }
 }

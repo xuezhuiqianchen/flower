@@ -2,6 +2,8 @@ package com.ly.flower.activity.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import com.ly.flower.R;
 import com.ly.flower.activity.login.LoginActivity;
 import com.ly.flower.base.BaseActivity;
 import com.ly.flower.base.DataStructure;
+import com.ly.flower.memory.GlobalStatic;
 import com.ly.flower.share.MessageHandler;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
@@ -77,7 +80,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private void fillView() {
         setTitle(R.string.str_discover);
         hideTitleLayout();
-        DataStructure.login = false;
+        if (GlobalStatic.getSharedString(this, GlobalStatic.LOGIN).equals("1")) {
+            DataStructure.login = true;
+            DataStructure.uid = GlobalStatic.getSharedString(this, GlobalStatic.UID);
+            DataStructure.passwd = GlobalStatic.getSharedString(this, GlobalStatic.PASSWORD);
+        }
+
     }
 
     private void initFragments() {

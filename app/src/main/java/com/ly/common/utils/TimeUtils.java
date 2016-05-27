@@ -111,4 +111,54 @@ public class TimeUtils {
         else
             return day - 1;
     }
+
+    public static String compareWithCurrentTime(String strTime) {
+        String timeAfterChange = "";
+        final int minute = 60*1000;   //1分钟
+        final int hour = minute * 60; //1小时
+        final int day = hour * 24;    //1天
+        final int week = day * 7;     //1周
+        final int month = week * 30;  //1月
+
+        //strTime的格式: yyyy-MM-dd HH:mm:ss
+        //设定时间的模板
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //得到指定模范的时间 (讲道理，curDate 会比 Mytime 大)
+        Date Mytime = null;
+        try {
+            Mytime = sdf.parse(strTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Date curDate = new Date(System.currentTimeMillis());
+
+        //比较
+        long nTime = Math.abs(curDate.getTime() - Mytime.getTime());
+        if((nTime / minute) < 1) {
+            //刚刚
+            timeAfterChange = "刚刚";
+        } else if((nTime / hour) < 1) {
+            //*分钟前
+            timeAfterChange = nTime / minute + "分钟前";
+        } else if((nTime / day) < 1) {
+            //*小时前
+            timeAfterChange = nTime / hour + "小时前";
+        } else if((nTime / week) < 1) {
+            //*天前
+            timeAfterChange = nTime / day + "天前";
+        } else if((nTime / month) < 1) {
+            //*星期前
+            timeAfterChange = nTime / week + "星期前";
+        } else {
+            //yyyy-MM-dd HH:mm:ss
+            timeAfterChange = strTime;
+        }
+
+        if(timeAfterChange.equals("")) {
+            timeAfterChange = strTime;
+        }
+
+        return timeAfterChange;
+    }
 }

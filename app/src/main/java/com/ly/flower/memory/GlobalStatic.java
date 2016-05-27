@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 public class GlobalStatic {
     private static final String SHARE_USER_INFO = "flowers";
     public static final String UID          = "uid";
+    public static final String PASSWORD     = "password";
+    public static final String LOGIN          = "blogin";
     public static final String NICKNAME     = "nickname_";
     public static final String PORTRAIT     = "portrait_";
 

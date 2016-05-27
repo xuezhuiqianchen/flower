@@ -2,6 +2,8 @@ package com.ly.flower.viewholder;
 
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +22,7 @@ import com.ly.flower.base.BaseFunction;
 import com.ly.flower.base.DataStructure;
 import com.ly.flower.network.AscynHttpUtil;
 import com.ly.flower.network.SendInfo;
+import com.ly.flower.share.MessageHandler;
 import com.ly.flower.share.Player;
 import com.makeramen.roundedimageview.RoundedImageView;
 import org.json.JSONArray;
@@ -209,17 +212,21 @@ public class DiscoveryViewHolder {
         vMediaPlayerController.setVisibility(View.GONE);
     }
 
-    private void userOperation(final BaseActivity activity, String otype, String osubtype, String ctype, String sid)
+    private void userOperation(final BaseActivity activity, final Handler handler,
+                               final String osubtype, final String ctype, final String sid)
     {
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(activity, AscynHttpUtil.URL_USER_OPERATION);
-        String strInfo = SendInfo.getUserOperationSendInfo(activity, otype, osubtype, ctype, sid);
+        String strInfo = SendInfo.getUserOperationSendInfo(activity, "0", osubtype, ctype, sid);
         activity.showProgressBar(R.string.tip_submiting);
         AscynHttpUtil.post(activity, strUrl, strInfo, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int arg0, Header[] headers, byte[] responsebody) {
                 activity.dismissProgressBar();
                 if (BaseFunction.verifyResult(new String(responsebody), activity.clSnackContainer)) {
-
+                    Bundle data = new Bundle();
+                    data.putString("cid", sid);
+                    data.putString("osubtype", osubtype);
+                    MessageHandler.sendMessage(handler, MessageHandler.PRISE_OPERATION, data);
                 }
             }
 

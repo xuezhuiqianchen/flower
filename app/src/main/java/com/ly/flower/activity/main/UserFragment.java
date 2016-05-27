@@ -142,6 +142,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
     {
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance, AscynHttpUtil.URL_EDIT_USER_INFO);
         String strInfo = SendInfo.getUserInfoSendInfo(mInstance);
+        mInstance.showInfoMessage(strInfo);
         mInstance.showProgressBar(R.string.tip_geting);
         AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler());
     }
@@ -150,6 +151,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
     {
         try {
             userObject = new JSONObject(new String(responsebody)).getJSONObject("data");
+            mInstance.showInfoMessage(userObject.toString());
             refreshBaseInfo();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -170,6 +172,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
             @Override
             public void onFailure(int arg0, Header[] headers, byte[] responsebody, Throwable err) {
                 mInstance.dismissProgressBar();
+                mInstance.showInfoMessage(err.getMessage());
+
             }
         };
     }
