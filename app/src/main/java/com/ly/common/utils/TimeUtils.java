@@ -159,6 +159,7 @@ public class TimeUtils {
             timeAfterChange = strTime;
         }
 
+        System.out.println(1);
         return timeAfterChange;
     }
 }
