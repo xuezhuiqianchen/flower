@@ -10,21 +10,17 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.ResponseHandlerInterface;
 import com.ly.common.utils.DimensionUtils;
 import com.ly.flower.R;
-import com.ly.flower.activity.user.MySuggestActivity;
-import com.ly.flower.activity.user.SettingActivity;
 import com.ly.flower.activity.user.MyCommentActivity;
+import com.ly.flower.activity.user.MySuggestActivity;
 import com.ly.flower.activity.user.MyTopicActivity;
+import com.ly.flower.activity.user.SettingActivity;
 import com.ly.flower.activity.user.UserInfoActivity;
 import com.ly.flower.base.BaseFragment;
 import com.ly.flower.base.BaseFunction;
-import com.ly.flower.memory.GlobalStatic;
-import com.ly.flower.base.DataStructure;
 import com.ly.flower.network.AscynHttpUtil;
 import com.ly.flower.network.SendInfo;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -7,11 +7,12 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.ly.flower.R;
 import com.ly.flower.activity.main.MainActivity;
-import com.ly.flower.base.BaseActivity;
 import com.ly.flower.share.MessageHandler;
 import com.ly.flower.viewholder.DiscoveryViewHolder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,7 +70,7 @@ public class DiscoveriesListAdapter extends BaseListAdapter {
     public void praiseOperation(String cid, String osubtype) {
         recommendArray = changeData(recommendArray, cid, osubtype);
         newestArray = changeData(newestArray, cid, osubtype);
-        array = changeData(array, cid, osubtype);
+        //array = changeData(array, cid, osubtype);
         notifyDataSetChanged();
     }
 
