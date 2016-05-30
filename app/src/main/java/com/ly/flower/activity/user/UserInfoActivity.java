@@ -121,10 +121,9 @@ public class UserInfoActivity extends BaseActivity {
             tvNickName.setText(strNickName);
             tvSignature.setText(strSignature);
             if(!strBkUrl.equals("")) {
-                ImageLoader.getInstance().displayImage(strBkUrl, ivBkg);
+                imageLoader.displayImage(strBkUrl, ivBkg, imageOptions);
             }
-
-            ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
+            imageLoader.displayImage(strPortrait, rivPortrait, portraitOptions);
         } catch (JSONException e) {
             e.printStackTrace();
         }

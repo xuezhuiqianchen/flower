@@ -114,7 +114,7 @@
         android:layout_marginLeft="20dp"
         android:textColor="@color/text_gray_light"
         android:textSize="13dp"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="@string/str_signature" />
 
     <EditText

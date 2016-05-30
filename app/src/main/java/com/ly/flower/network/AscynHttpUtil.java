@@ -148,18 +148,17 @@ public class AscynHttpUtil {
 		try {
 			String url = UPLOAD_IMAGE;
 			AsyncHttpClient httpClient = getHttpClientByUrl(url);
-
+			RequestParams params = new RequestParams();
+			params.put("userid", DataStructure.uid);
+			params.put("passwd", DataStructure.passwd);
 			for (int i = 0; i < pathList.size(); i++)
 			{
 				File file = new File(pathList.get(i));
-				RequestParams params = new RequestParams();
 				if (file.exists() && file.length() > 0) {
-					params.put("userid", DataStructure.uid);
-					params.put("passwd", DataStructure.passwd);
 					params.put("profile_picture"+String.valueOf(i), file);
-					httpClient.post(url, params, responseHandler);
 				}
 			}
+			httpClient.post(url, params, responseHandler);
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -60,10 +60,10 @@ public class EditUserInfoActivity extends BaseActivity {
 
                         String portrait = "";
                         String bkg = "";
-                        int i = 0;
+                        int i = array.length() - 1;
                         if (!strBkgUrl.equals("")) {
                             bkg = array.getJSONObject(i).getString("url");
-                            i++;
+                            i--;
                         }
 
                         if (!strPortrait.equals("")) {
@@ -131,10 +131,10 @@ public class EditUserInfoActivity extends BaseActivity {
             etNickName.setText(strNickName);
             etSignature.setText(strSignature);
             if(!strBkUrl.equals("")) {
-                ImageLoader.getInstance().displayImage(strBkUrl, ivBkg);
+                imageLoader.displayImage(strBkUrl, ivBkg, imageOptions);
             }
 
-            ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
+            imageLoader.displayImage(strPortrait, rivPortrait, portraitOptions);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -170,8 +170,7 @@ public class EditUserInfoActivity extends BaseActivity {
 
     private void changeUserInfo()
     {
-        showProgressBar(R.string.tip_geting);
-//        AscynHttpUtil.uploadImage(this, strBkgUrl, getResponseHandler(CB_UPLOAD_IMAGE));
+        showProgressBar(R.string.tip_uploading);
         ArrayList<String> pathList = getImageList();
         if (pathList.size() > 0) {
             AscynHttpUtil.uploadMutilImage(this, pathList, getResponseHandler(CB_UPLOAD_IMAGE));
@@ -203,7 +202,7 @@ public class EditUserInfoActivity extends BaseActivity {
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(this, AscynHttpUtil.URL_EDIT_USER_INFO);
         String strInfo = SendInfo.getEditUserInfoSendInfo(this, etNickName.getText().toString(),
                 strPortrait, etSignature.getText().toString(), strBkgUrl);
-        showProgressBar(R.string.tip_geting);
+        showProgressBar(R.string.tip_uploading);
         AscynHttpUtil.post(this, strUrl, strInfo, getResponseHandler(CB_EDIT_USER_INFO));
     }
 
