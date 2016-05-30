@@ -2,8 +2,6 @@ package com.ly.flower.activity.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +25,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private int checkId = 0;
 
     private RelativeLayout rlContent = null;
+    private AddFragment addFragment = null;
     private HomeFragment homeFragment = null;
-
     private DiscoverFragment discoverFragment = null;
     private MsgFragment msgFragment = null;
     private UserFragment userFragment = null;
@@ -89,6 +87,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void initFragments() {
+        addFragment = new AddFragment(mInstance, inflater);
         homeFragment = new HomeFragment(mInstance, inflater);
         discoverFragment = new DiscoverFragment(mInstance, inflater);
         msgFragment = new MsgFragment(mInstance, inflater);
@@ -118,6 +117,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void showFragment(String tag) {
+        if (AddFragment.TAG == tag)
+        {
+            addFragment.onResume();
+            return;
+        }
+
         if (rlContent.getTag() == tag) {
             return;
         }
@@ -149,7 +154,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         {
             return;
         }
-        rlContent.removeAllViews();
+
+        if (AddFragment.TAG != tag) {
+            rlContent.removeAllViews();
+        }
+
         rlContent.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         rlContent.setTag(tag);
@@ -203,7 +212,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         /**
          * 取截图；模糊处理；动画
          */
-
+        showFragment(AddFragment.TAG);
     }
 
     public void doCheckHomeAction(){

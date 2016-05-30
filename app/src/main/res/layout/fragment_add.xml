@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_backgound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/rl_club"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/iv_club"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/club"
+                android:scaleType="fitXY"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/iv_club"
+                android:gravity="center"
+                android:textColor="@color/text_theme"
+                android:textSize="15dp"
+                android:text="@string/club"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_interest_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/iv_interest_card"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/interest_card"
+                android:scaleType="fitXY"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/iv_interest_card"
+                android:gravity="center"
+                android:textColor="@color/text_theme"
+                android:textSize="15dp"
+                android:text="@string/interest_card"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_add_us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/iv_add_us"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/add_us"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/iv_add_us"
+            android:gravity="center"
+            android:textColor="@color/text_theme"
+            android:textSize="15dp"
+            android:text="@string/add_us"/>
+    </RelativeLayout>
+
+</RelativeLayout>
