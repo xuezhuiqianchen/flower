@@ -1,16 +1,17 @@
 package com.ly.flower.network;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-
 import android.content.Context;
-import com.loopj.android.http.AsyncHttpClient; 
+
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
 import com.ly.flower.base.DataStructure;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -124,12 +125,12 @@ public class AscynHttpUtil {
 			String url = UPLOAD_IMAGE;
 			File file = new File(path); 
 			AsyncHttpClient httpClient = getHttpClientByUrl(url);
-//			httpClient.addHeader("uid", DataStructure.uid);
-//			httpClient.addHeader("passwd", DataStructure.passwd);
+			httpClient.addHeader("uid", DataStructure.uid);
+			httpClient.addHeader("passwd", DataStructure.passwd);
 			RequestParams params = new RequestParams();
 			if (file.exists() && file.length() > 0) {
-				params.put("uid", "6");
-				params.put("passwd", "8ddcff3a80f4189ca1c9d4d902c3c909");
+				params.put("uid", DataStructure.uid);
+				params.put("passwd", DataStructure.passwd);
 				params.put("profile_picture", file);
 				httpClient.post(url, params, responseHandler);
 			}
@@ -149,16 +150,17 @@ public class AscynHttpUtil {
 		try {
 			String url = UPLOAD_IMAGE;
 			AsyncHttpClient httpClient = getHttpClientByUrl(url);
-//			httpClient.addHeader("uid", DataStructure.uid);
-//			httpClient.addHeader("passwd", DataStructure.passwd);
+			httpClient.addHeader("uid", DataStructure.uid);
+			httpClient.addHeader("passwd", DataStructure.passwd);
+			System.out.println("上传多张图片中, 用户id：" + DataStructure.uid + " , 密码:" + DataStructure.passwd);
 
 			for (int i = 0; i < pathList.size(); i++)
 			{
 				File file = new File(pathList.get(i));
 				RequestParams params = new RequestParams();
 				if (file.exists() && file.length() > 0) {
-					params.put("uid", DataStructure.uid);
-					params.put("passwd", DataStructure.passwd);
+//					params.put("uid", DataStructure.uid);
+//					params.put("passwd", DataStructure.passwd);
 					params.put("profile_picture", file);
 					httpClient.post(url, params, responseHandler);
 				}

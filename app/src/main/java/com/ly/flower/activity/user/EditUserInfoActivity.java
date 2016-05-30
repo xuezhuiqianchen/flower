@@ -168,16 +168,19 @@ public class EditUserInfoActivity extends BaseActivity {
     private void changeUserInfo()
     {
         showProgressBar(R.string.tip_geting);
-        AscynHttpUtil.uploadImage(this, strBkgUrl, getResponseHandler(CB_UPLOAD_IMAGE));
-//        ArrayList<String> pathList = getImageList();
-//        if (pathList.size() > 0)
-//            AscynHttpUtil.uploadMutilImage(this, pathList, getResponseHandler(CB_UPLOAD_IMAGE));
-//        else
-//            MessageHandler.sendMessage(mHandler, EDIT_USER_INFO, "");
+//        AscynHttpUtil.uploadImage(this, strBkgUrl, getResponseHandler(CB_UPLOAD_IMAGE));
+        ArrayList<String> pathList = getImageList();
+        if (pathList.size() > 0) {
+            AscynHttpUtil.uploadMutilImage(this, pathList, getResponseHandler(CB_UPLOAD_IMAGE));
+        }
+        else {
+            MessageHandler.sendMessage(mHandler, EDIT_USER_INFO, "");
+        }
     }
 
     private ArrayList<String> getImageList()
     {
+        //将改变后的背景/头像上传
         ArrayList<String> pathList = new ArrayList<>();
         if (!strBkgUrl.equals(""))
         {

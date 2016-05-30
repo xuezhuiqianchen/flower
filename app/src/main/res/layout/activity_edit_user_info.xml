@@ -22,14 +22,17 @@
     <TextView
         android:id="@+id/tv_save"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="24dp"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
-        android:textColor="@color/white"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#4A4A4A"
         android:layout_alignParentRight="true"
         android:textSize="15dp"
         android:gravity="center"
-        android:text="@string/str_save" />
+        android:text="@string/str_save"
+        android:background="@drawable/bg_round_corner_translucent_gray" />
 
     <TextView
         android:id="@+id/tv_tip"
@@ -92,7 +95,8 @@
         android:textColor="@color/text_theme"
         android:gravity="center_vertical"
         android:text="dms"
-        android:background="@null"/>
+        android:background="@null"
+        android:singleLine="true"/>
 
     <View
         android:layout_width="match_parent"

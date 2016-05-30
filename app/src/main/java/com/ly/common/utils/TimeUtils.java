@@ -112,54 +112,71 @@ public class TimeUtils {
             return day - 1;
     }
 
-    public static String compareWithCurrentTime(String strTime) {
+    public static String parseToIntervalTimeFormat(String strTime) {
         String timeAfterChange = "";
-        final int minute = 60*1000;   //1分钟
-        final int hour = minute * 60; //1小时
-        final int day = hour * 24;    //1天
-        final int week = day * 7;     //1周
-        final int month = week * 30;  //1月
 
-        //strTime的格式: yyyy-MM-dd HH:mm:ss
-        //设定时间的模板
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //得到指定模范的时间 (讲道理，curDate 会比 Mytime 大)
-        Date Mytime = null;
         try {
-            Mytime = sdf.parse(strTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            final int minute = 60*1000;   //1分钟
+            final int hour = minute * 60; //1小时
+            final int day = hour * 24;    //1天
+            final int week = day * 7;     //1周
+            final int month = week * 30;  //1月
 
-        Date curDate = new Date(System.currentTimeMillis());
+            //strTime的格式: yyyy-MM-dd HH:mm:ss
+            //设定时间的模板
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            //得到指定模范的时间 (讲道理，curDate 会比 Mytime 大)
+            Date Mytime = null;
+            try {
+                Mytime = sdf.parse(strTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-        //比较
-        long nTime = Math.abs(curDate.getTime() - Mytime.getTime());
-        if((nTime / minute) < 1) {
-            //刚刚
-            timeAfterChange = "刚刚";
-        } else if((nTime / hour) < 1) {
-            //*分钟前
-            timeAfterChange = nTime / minute + "分钟前";
-        } else if((nTime / day) < 1) {
-            //*小时前
-            timeAfterChange = nTime / hour + "小时前";
-        } else if((nTime / week) < 1) {
-            //*天前
-            timeAfterChange = nTime / day + "天前";
-        } else if((nTime / month) < 1) {
-            //*星期前
-            timeAfterChange = nTime / week + "星期前";
-        } else {
-            //yyyy-MM-dd HH:mm:ss
+            Date curDate = new Date(System.currentTimeMillis());
+
+            //比较
+            long nTime = Math.abs(curDate.getTime() - Mytime.getTime());
+            if((nTime / minute) < 1) {
+                //刚刚
+                timeAfterChange = "刚刚";
+            } else if((nTime / hour) < 1) {
+                //*分钟前
+                timeAfterChange = nTime / minute + "分钟前";
+            } else if((nTime / day) < 1) {
+                //*小时前
+                timeAfterChange = nTime / hour + "小时前";
+            } else if((nTime / week) < 1) {
+                //*天前
+                timeAfterChange = nTime / day + "天前";
+            } else if((nTime / month) < 1) {
+                //*星期前
+                timeAfterChange = nTime / week + "星期前";
+            } else {
+                //yyyy-MM-dd HH:mm:ss
+                Date date = null;
+                try {
+                    date = new SimpleDateFormat("yyyy-MM-dd").parse(strTime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar c = Calendar.getInstance();
+                c.setTime(date);
+                int nYear = c.get(Calendar.YEAR);
+                int nMonth = c.get(Calendar.MONTH) + 1; //0~11,需要+1
+                int nDay = c.get(Calendar.DAY_OF_MONTH);
+
+                timeAfterChange = nYear + "年" + nMonth + "月" + nDay + "日";
+
+            }
+
+            if(timeAfterChange.equals("")) {
+                timeAfterChange = strTime;
+            }
+        } catch (Exception e) {
             timeAfterChange = strTime;
         }
 
-        if(timeAfterChange.equals("")) {
-            timeAfterChange = strTime;
-        }
-
-        System.out.println(1);
         return timeAfterChange;
     }
 }

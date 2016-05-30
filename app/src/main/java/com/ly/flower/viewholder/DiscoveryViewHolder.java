@@ -1,7 +1,6 @@
 package com.ly.flower.viewholder;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.SurfaceView;
@@ -17,7 +16,6 @@ import com.ly.common.utils.Common;
 import com.ly.common.utils.DimensionUtils;
 import com.ly.common.utils.TimeUtils;
 import com.ly.flower.R;
-import com.ly.flower.activity.main.MainActivity;
 import com.ly.flower.base.BaseActivity;
 import com.ly.flower.base.BaseFunction;
 import com.ly.flower.base.DataStructure;
@@ -98,7 +96,7 @@ public class DiscoveryViewHolder {
         try {
             String strPortrait = object.getString("uavatar");
             String strNickname = object.getString("uname");
-            String strTime = TimeUtils.compareWithCurrentTime(object.getString("time"));
+            String strTime = TimeUtils.parseToIntervalTimeFormat(object.getString("time"));
             String strClub = "";
             JSONArray imageArray = object.getJSONArray("img");
             String strImageUrl = "";
