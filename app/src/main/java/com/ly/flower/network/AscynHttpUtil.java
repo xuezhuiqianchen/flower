@@ -125,11 +125,9 @@ public class AscynHttpUtil {
 			String url = UPLOAD_IMAGE;
 			File file = new File(path); 
 			AsyncHttpClient httpClient = getHttpClientByUrl(url);
-			httpClient.addHeader("uid", DataStructure.uid);
-			httpClient.addHeader("passwd", DataStructure.passwd);
 			RequestParams params = new RequestParams();
 			if (file.exists() && file.length() > 0) {
-				params.put("uid", DataStructure.uid);
+				params.put("userid", DataStructure.uid);
 				params.put("passwd", DataStructure.passwd);
 				params.put("profile_picture", file);
 				httpClient.post(url, params, responseHandler);
@@ -150,18 +148,15 @@ public class AscynHttpUtil {
 		try {
 			String url = UPLOAD_IMAGE;
 			AsyncHttpClient httpClient = getHttpClientByUrl(url);
-			httpClient.addHeader("uid", DataStructure.uid);
-			httpClient.addHeader("passwd", DataStructure.passwd);
-			System.out.println("上传多张图片中, 用户id：" + DataStructure.uid + " , 密码:" + DataStructure.passwd);
 
 			for (int i = 0; i < pathList.size(); i++)
 			{
 				File file = new File(pathList.get(i));
 				RequestParams params = new RequestParams();
 				if (file.exists() && file.length() > 0) {
-//					params.put("uid", DataStructure.uid);
-//					params.put("passwd", DataStructure.passwd);
-					params.put("profile_picture", file);
+					params.put("userid", DataStructure.uid);
+					params.put("passwd", DataStructure.passwd);
+					params.put("profile_picture"+String.valueOf(i), file);
 					httpClient.post(url, params, responseHandler);
 				}
 			}

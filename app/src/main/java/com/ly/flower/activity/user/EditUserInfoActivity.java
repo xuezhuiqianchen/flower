@@ -243,12 +243,14 @@ public class EditUserInfoActivity extends BaseActivity {
                             break;
 
                         case CB_EDIT_USER_INFO:
+                            dismissProgressBar();
                             cbGetUserInfo(responsebody);
                             break;
                     }
-                }
-                if (type == CB_EDIT_USER_INFO)
+                }else {
                     dismissProgressBar();
+                }
+
             }
 
             @Override
