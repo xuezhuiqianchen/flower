@@ -9,15 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:scaleType="fitXY"
-        android:src="@drawable/default_image" />
+        android:src="@drawable/default_bg_userinfo" />
 
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="40dp"
         android:layout_height="39.5dp"
-        android:padding="8dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/back_icon" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_round_icon" />
 
     <ImageView
         android:id="@+id/iv_edit"
