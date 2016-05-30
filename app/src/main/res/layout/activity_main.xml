@@ -17,5 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/ll_menu"
-        android:layout_below="@id/titlebar"/>
+        android:layout_below="@id/titlebar"
+        />
+
+    <include layout="@layout/fragment_add"
+        android:id="@+id/rl_add_fragment"
+        android:visibility="gone"/>
 </RelativeLayout>

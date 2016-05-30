@@ -76,6 +76,11 @@
     <string name="qzone">QQ空间</string>
     <string name="sina">新浪微博</string>
 
+    <!-- add -->
+    <string name="add_us">加入我们</string>
+    <string name="club">俱乐部</string>
+    <string name="interest_card">兴趣卡</string>
+
     <!-- XListView -->
     <string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">松开刷新数据</string>
