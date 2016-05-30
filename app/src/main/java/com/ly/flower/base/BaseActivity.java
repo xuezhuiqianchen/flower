@@ -1,8 +1,11 @@
 package com.ly.flower.base;
 
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
 import android.app.Activity;
 import android.os.Bundle;
@@ -159,6 +162,10 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     }
 
     public void doClickRightTextAction() {
+    }
+
+    public void setBackgroundResource(int rid){
+        layoutRoot.setBackgroundResource(rid);
     }
 
     public void hideTitleLayout() {
