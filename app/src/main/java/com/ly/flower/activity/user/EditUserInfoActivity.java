@@ -130,7 +130,10 @@ public class EditUserInfoActivity extends BaseActivity {
 
             etNickName.setText(strNickName);
             etSignature.setText(strSignature);
-            ImageLoader.getInstance().displayImage(strBkUrl, ivBkg);
+            if(!strBkUrl.equals("")) {
+                ImageLoader.getInstance().displayImage(strBkUrl, ivBkg);
+            }
+
             ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
         } catch (JSONException e) {
             e.printStackTrace();
