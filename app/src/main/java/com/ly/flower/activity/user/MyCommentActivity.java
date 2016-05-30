@@ -41,6 +41,7 @@ public class MyCommentActivity extends BaseActivity {
         mListView = (ListView) this.findViewById(R.id.listView);
         mAdapter = new MyCommentListAdapter(inflater);
         mAdapter.setContext(this);
+        mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

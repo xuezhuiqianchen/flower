@@ -2,6 +2,7 @@ package com.ly.flower.activity.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.ly.flower.activity.login.LoginActivity;
 import com.ly.flower.base.BaseActivity;
 import com.ly.flower.base.DataStructure;
 import com.ly.flower.memory.GlobalStatic;
+import com.ly.flower.share.Blur;
+import com.ly.flower.share.FastBlur;
 import com.ly.flower.share.MessageHandler;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
@@ -212,6 +215,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         /**
          * 取截图；模糊处理；动画
          */
+        View view = getRootView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap bitmap = view.getDrawingCache();
+        bitmap = Blur.fastblur(mInstance, bitmap, 15);
+        addFragment.setBackground(bitmap);
         showFragment(AddFragment.TAG);
     }
 

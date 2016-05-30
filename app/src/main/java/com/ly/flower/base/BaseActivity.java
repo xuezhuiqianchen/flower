@@ -164,6 +164,11 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     public void doClickRightTextAction() {
     }
 
+    public View getRootView()
+    {
+        return layoutRoot;
+    }
+
     public void setBackgroundResource(int rid){
         layoutRoot.setBackgroundResource(rid);
     }

@@ -1,11 +1,21 @@
 package com.ly.flower.activity.main;
 
+import android.annotation.TargetApi;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.ly.common.utils.Common;
 import com.ly.flower.R;
 import com.ly.flower.base.DataStructure;
 import com.ly.flower.memory.GlobalStatic;
@@ -19,7 +29,6 @@ public class AddFragment implements View.OnClickListener {
     public LayoutInflater inflater = null;
     public RelativeLayout rlFragmentView = null;
 
-    private ImageView ivBg ;
     private RelativeLayout layoutClub, layoutAddUs, layoutInterestCard;//, layoutContent
 
     public Animation inBounceAnim, outBounceAnim;
@@ -32,15 +41,18 @@ public class AddFragment implements View.OnClickListener {
 
     public void initView() {
         rlFragmentView = (RelativeLayout) mInstance.findViewById(R.id.rl_add_fragment);
-        ivBg = (ImageView) mInstance.findViewById(R.id.iv_backgound);
         layoutClub = (RelativeLayout) mInstance.findViewById(R.id.rl_club);
         layoutAddUs = (RelativeLayout) mInstance.findViewById(R.id.rl_add_us);
         layoutInterestCard = (RelativeLayout) mInstance.findViewById(R.id.rl_interest_card);
 
-        ivBg.setOnClickListener(this);
         layoutClub.setOnClickListener(this);
         layoutAddUs.setOnClickListener(this);
         layoutInterestCard.setOnClickListener(this);
+        rlFragmentView.setOnClickListener(this);
+
+//        inBounceAnim = new TranslateAnimation(0, 0, Common.DEVICE_SCREEN_HEIGHT, 0);
+//        inBounceAnim.setDuration(800);
+//        inBounceAnim.setInterpolator(new BounceInterpolator());
 
         inBounceAnim = AnimationUtils.loadAnimation(mInstance, R.anim.in_bounce);
         outBounceAnim = AnimationUtils.loadAnimation(mInstance, R.anim.out_bounce);
@@ -48,16 +60,16 @@ public class AddFragment implements View.OnClickListener {
         inBounceAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-//                layoutClub.setVisibility(View.GONE);
-//                layoutInterestCard.setVisibility(View.GONE);
-//                layoutAddUs.setVisibility(View.GONE);
+//                layoutClub.setVisibility(View.VISIBLE);
+//                layoutInterestCard.setVisibility(View.VISIBLE);
+//                layoutAddUs.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                layoutClub.setVisibility(View.VISIBLE);
-                layoutInterestCard.setVisibility(View.VISIBLE);
-                layoutAddUs.setVisibility(View.VISIBLE);
+//                layoutClub.setVisibility(View.VISIBLE);
+//                layoutInterestCard.setVisibility(View.VISIBLE);
+//                layoutAddUs.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -68,16 +80,10 @@ public class AddFragment implements View.OnClickListener {
         outBounceAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                layoutClub.setVisibility(View.VISIBLE);
-                layoutInterestCard.setVisibility(View.VISIBLE);
-                layoutAddUs.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                layoutClub.setVisibility(View.GONE);
-                layoutInterestCard.setVisibility(View.GONE);
-                layoutAddUs.setVisibility(View.GONE);
                 rlFragmentView.setVisibility(View.GONE);
             }
 
@@ -120,6 +126,12 @@ public class AddFragment implements View.OnClickListener {
         startInAnim();
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public void setBackground(Bitmap bitmap)
+    {
+        rlFragmentView.setBackground(new BitmapDrawable(bitmap));
+    }
+
     private void doClickClubAction() {
         startInAnim();
     }
@@ -134,12 +146,18 @@ public class AddFragment implements View.OnClickListener {
 
     private void startInAnim()
     {
-        rlFragmentView.startAnimation(inBounceAnim);
+        layoutClub.startAnimation(inBounceAnim);
+        layoutAddUs.startAnimation(inBounceAnim);
+        layoutInterestCard.startAnimation(inBounceAnim);
+//        rlFragmentView.startAnimation(inBounceAnim);
     }
 
     public void startOutAnim()
     {
-        rlFragmentView.startAnimation(outBounceAnim);
+        layoutClub.startAnimation(outBounceAnim);
+        layoutAddUs.startAnimation(outBounceAnim);
+        layoutInterestCard.startAnimation(outBounceAnim);
+//        rlFragmentView.startAnimation(outBounceAnim);
 
     }
 }
