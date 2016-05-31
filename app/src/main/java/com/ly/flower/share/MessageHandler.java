@@ -14,6 +14,7 @@ public class MessageHandler {
 	public static final int REQUEST 										= 13;
 	public static final int REQUEST_USER_FRAGMENT							= 14;
 	public static final int REQUEST_MSG_FRAGMENT							= 15;
+	public static final int REQUEST_MSG_FRESH_USERINFO						= 16;
 
 	public static final int RESULT_ERROR									= 21;
 	public static final int RESULT_OK										= 22;
@@ -33,7 +34,7 @@ public class MessageHandler {
 	public static final int FILE											= 61;
 	public static final int IMAG											= 62;
 	
-	public static final int LIST_DIALOG_CHECK							= 101;
+	public static final int LIST_DIALOG_CHECK								= 101;
 
 	public static void sendMessage(final Handler handler, int messageWhat)
 	{

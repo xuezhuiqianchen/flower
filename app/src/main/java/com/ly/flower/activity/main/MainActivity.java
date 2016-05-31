@@ -15,7 +15,6 @@ import com.ly.flower.base.BaseActivity;
 import com.ly.flower.base.DataStructure;
 import com.ly.flower.memory.GlobalStatic;
 import com.ly.flower.share.Blur;
-import com.ly.flower.share.FastBlur;
 import com.ly.flower.share.MessageHandler;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
@@ -52,6 +51,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     DataStructure.login = true;
                     checkId = R.id.rl_user;
                     doCheckUserAction();
+                }
+                break;
+
+            case MessageHandler.REQUEST_MSG_FRESH_USERINFO:
+                if(resultCode == MessageHandler.RESULT_OK) {
+                    if(userFragment != null) {
+                        userFragment.getData();
+                    }
                 }
                 break;
         }
