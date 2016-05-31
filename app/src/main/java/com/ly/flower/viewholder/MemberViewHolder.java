@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ly.common.utils.DimensionUtils;
+import com.ly.common.utils.TimeUtils;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -29,20 +31,19 @@ public class MemberViewHolder {
         tvTime = (TextView) parentView.findViewById(R.id.tv_time);
     }
 
-    public void initData(Context context, JSONObject object)
+    public void initData(BaseActivity activity, JSONObject object)
     {
-        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(context, 100));
+        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(activity, 100));
         try {
             String strPortrait = object.getString("mavatar");
             String strNickname = object.getString("mname");
             String strLevel = object.getString("mlevel");
-            String strTime = object.getString("join_time");
+            String strTime = TimeUtils.parseToIntervalTimeFormat(object.getString("join_time"));
 
             tvNickname.setText(strNickname);
             tvLevel.setText(strLevel);
             tvTime.setText(strTime);
-            ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
-
+            activity.imageLoader.displayImage(strPortrait, rivPortrait, activity.portraitOptions);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -107,5 +107,7 @@
         android:layout_above="@id/rl_reply_bar"
         android:dividerHeight="0dp"
         android:background="@android:color/white"
-        android:transcriptMode="alwaysScroll" />
+         />
+    <!--android:stackFromBottom="true"-->
+    <!--android:transcriptMode="alwaysScroll"-->
 </RelativeLayout>

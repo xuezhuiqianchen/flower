@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.ly.flower.viewholder.MyTopicViewHolder;
 
 import org.json.JSONObject;
@@ -14,7 +15,7 @@ import org.json.JSONObject;
  * Created by admin on 2016/5/23.
  */
 public class MyTopciListAdapter extends BaseListAdapter {
-    private Context context;
+    private BaseActivity activity;
 
     public MyTopciListAdapter(LayoutInflater inflater) {
         super(inflater);
@@ -33,13 +34,13 @@ public class MyTopciListAdapter extends BaseListAdapter {
             myTopicViewHolder = (MyTopicViewHolder) convertView.getTag();
         }
 
-        myTopicViewHolder.initData(context, (JSONObject)getItem(position));
+        myTopicViewHolder.initData(activity, (JSONObject)getItem(position));
 
         return convertView;
     }
 
-    public void setContext(Context context)
+    public void setContext(BaseActivity activity)
     {
-        this.context = context;
+        this.activity = activity;
     }
 }

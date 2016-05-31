@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.ly.common.utils.DimensionUtils;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONException;
@@ -43,12 +44,12 @@ public class MyCommentViewHolder {
      "title": "大标题",
      "cname": "俱乐部名称"
      }
-     * @param context
+     * @param activity
      * @param object
      */
-    public void initData(Context context, JSONObject object)
+    public void initData(BaseActivity activity, JSONObject object)
     {
-        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(context, 100));
+        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(activity, 100));
         try {
             String strPortrait = object.getString("avatar");
             String strNickname = object.getString("nickname");
@@ -62,8 +63,7 @@ public class MyCommentViewHolder {
             tvClub.setText(strClub);
             tvTitle.setText(strTitle);
             tvContent.setText(strContent);
-
-            ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
+            activity.imageLoader.displayImage(strPortrait, rivPortrait, activity.portraitOptions);
         } catch (JSONException e) {
             e.printStackTrace();
         }

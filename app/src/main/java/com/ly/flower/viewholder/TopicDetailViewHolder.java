@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ly.common.utils.DimensionUtils;
+import com.ly.common.utils.TimeUtils;
 import com.ly.flower.R;
 import com.ly.flower.base.BaseActivity;
 import com.ly.flower.activity.MediaPlayerActivity;
@@ -45,13 +46,13 @@ public class TopicDetailViewHolder {
         ivPlay = (ImageView) parentView.findViewById(R.id.iv_play);
     }
 
-    public void initData(final BaseActivity context, JSONObject object)
+    public void initData(final BaseActivity activity, JSONObject object)
     {
-        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(context, 100));
+        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(activity, 100));
         try {
             String strPortrait = object.getString("uavatar");
             String strNickname = object.getString("uname");
-            String strTime = object.getString("time");
+            String strTime = TimeUtils.parseToIntervalTimeFormat(object.getString("time"));
             String strTitle = object.getString("title");
             String strSubTitle = object.getString("sub_title");
             String strCommentNum = object.getString("ccomment");
@@ -66,8 +67,10 @@ public class TopicDetailViewHolder {
             tvSubTitle.setText(strSubTitle);
             tvCommentNum.setText(strCommentNum);
             tvPraiseNum.setText(strPraiseNum);
-            ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
-            initImages(context, imagesArray);
+
+            activity.imageLoader.displayImage(strPortrait, rivPortrait, activity.portraitOptions);
+
+            initImages(activity, imagesArray);
 
             if (strCtype.equals("0")) {
                 ivPlay.setVisibility(View.GONE);
@@ -76,7 +79,7 @@ public class TopicDetailViewHolder {
                 ivPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        context.gotoActivity(MediaPlayerActivity.class, strVideoUrl);
+                        activity.gotoActivity(MediaPlayerActivity.class, strVideoUrl);
                     }
                 });
             }
@@ -85,15 +88,16 @@ public class TopicDetailViewHolder {
         }
     }
 
-    private void initImages(Context context, JSONArray array)
+    private void initImages(BaseActivity activity, JSONArray array)
     {
         llImages.removeAllViews();
         for (int i = 0; i < array.length(); i++)
         {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ImageView imageView = (ImageView)inflater.inflate(R.layout.item_image, llImages, false);
             try {
-                ImageLoader.getInstance().displayImage(array.getJSONObject(i).getString("url"), imageView);
+                activity.imageLoader.displayImage(array.getJSONObject(i).getString("url"),
+                        imageView, activity.imageOptions);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -13,8 +13,10 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.ResponseHandlerInterface;
 import com.ly.flower.R;
 import com.ly.flower.activity.ShareActivity;
+import com.ly.flower.activity.login.LoginActivity;
 import com.ly.flower.adapter.DetailListAdapter;
 import com.ly.flower.base.BaseActivity;
+import com.ly.flower.base.DataStructure;
 import com.ly.flower.network.AscynHttpUtil;
 import com.ly.flower.network.SendInfo;
 import com.ly.flower.base.BaseFunction;
@@ -176,6 +178,8 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
     private void praiseAction()
     {
+        if (!DataStructure.login)
+            mInstance.gotoActivity(LoginActivity.class);
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance,
                 AscynHttpUtil.URL_USER_OPERATION);
         String cid = "";
@@ -205,6 +209,8 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
     private void replyAction()
     {
+        if (!DataStructure.login)
+            mInstance.gotoActivity(LoginActivity.class);
         String strUrl = "";
         String strInfo = "";
         String strContent = etReplyContent.getText().toString();

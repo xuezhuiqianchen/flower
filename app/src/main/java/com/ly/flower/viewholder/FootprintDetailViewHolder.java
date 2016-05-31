@@ -8,7 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ly.common.utils.DimensionUtils;
+import com.ly.common.utils.TimeUtils;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
@@ -40,13 +42,13 @@ public class FootprintDetailViewHolder {
         llImages = (LinearLayout) parentView.findViewById(R.id.ll_images);
     }
 
-    public void initData(Context context, JSONObject object)
+    public void initData(BaseActivity activity, JSONObject object)
     {
-        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(context, 100));
+        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(activity, 100));
         try {
             String strPortrait = object.getString("uavatar");
             String strNickname = object.getString("uname");
-            String strTime = object.getString("time");
+            String strTime = TimeUtils.parseToIntervalTimeFormat(object.getString("time"));
             String strContent = object.getString("title");
             String strPlace = object.getString("place");
             String strCommentNum = object.getString("ccomment");
@@ -61,21 +63,22 @@ public class FootprintDetailViewHolder {
             tvPraiseNum.setText(strPraiseNum);
             ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
 
-            initImages(context, imagesArray);
+            initImages(activity, imagesArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void initImages(Context context, JSONArray array)
+    private void initImages(BaseActivity activity, JSONArray array)
     {
         llImages.removeAllViews();
         for (int i = 0; i < array.length(); i++)
         {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ImageView imageView = (ImageView)inflater.inflate(R.layout.item_image, llImages, false);
             try {
-                ImageLoader.getInstance().displayImage(array.getJSONObject(i).getString("url"), imageView);
+                activity.imageLoader.displayImage(array.getJSONObject(i).getString("url"),
+                        imageView, activity.imageOptions);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

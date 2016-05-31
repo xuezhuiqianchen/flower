@@ -38,6 +38,8 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     private RadioGroup rgMenu;
     private XListView lvDiscoveries;
     private DiscoveriesListAdapter discoveriesListAdapter;
+    private int recommenPpage = 1;
+    private int newestPpage = 1;
 
     public DiscoverFragment(MainActivity instance, LayoutInflater inflater) {
         super(instance, inflater);
@@ -105,9 +107,19 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
             lvDiscoveries.stopLoadMore();
             return;
         }
+        int page = 1;
+        if (TYPE_RECOMMEND == type) {
+            page = recommenPpage;
+            recommenPpage++;
+        } else {
+            page = newestPpage;
+            newestPpage++;
+        }
 
-        String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance, AscynHttpUtil.URL_DISCOVER_GET_LIST);
-        String strInfo = SendInfo.getListOfDiscoverSendInfo(mInstance, "10", "0", String.valueOf(type), object);
+        String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance,
+                AscynHttpUtil.URL_DISCOVER_GET_LIST);
+        String strInfo = SendInfo.getListOfDiscoverSendInfo(mInstance, "10", String.valueOf(page),
+                String.valueOf(type), object);
         AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler(GET_DISCOVERY_MORE, type));
     }
 

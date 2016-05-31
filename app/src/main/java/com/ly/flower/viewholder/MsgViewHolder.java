@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.ly.common.utils.DimensionUtils;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONException;
@@ -39,9 +40,9 @@ public class MsgViewHolder {
         ivPraiseFlag = (ImageView) parentView.findViewById(R.id.iv_praise);
     }
 
-    public void initData(Context context, JSONObject object)
+    public void initData(BaseActivity activity, JSONObject object)
     {
-        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(context, 100));
+        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(activity, 100));
         try {
             String strPortrait = object.getString("icon");
             String strNickname = object.getString("sname");
@@ -74,8 +75,7 @@ public class MsgViewHolder {
                 strContent = object.getString("content");
                 tvContent.setText(strContent);
             }
-            ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
-
+            activity.imageLoader.displayImage(strPortrait, rivPortrait, activity.portraitOptions);
         } catch (JSONException e) {
             e.printStackTrace();
         }

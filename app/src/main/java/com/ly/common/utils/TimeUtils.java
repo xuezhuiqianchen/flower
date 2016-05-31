@@ -113,6 +113,8 @@ public class TimeUtils {
     }
 
     public static String parseToIntervalTimeFormat(String strTime) {
+        if (strTime.contains("/"))
+            strTime = strTime.replace("/", "-");
         String timeAfterChange = "";
 
         try {

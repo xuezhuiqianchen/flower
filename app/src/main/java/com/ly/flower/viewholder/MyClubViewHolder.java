@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.ly.common.utils.DimensionUtils;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -26,15 +27,15 @@ public class MyClubViewHolder {
         tvName = (TextView) parentView.findViewById(R.id.tv_name);
     }
 
-    public void initData(Context context, JSONObject object)
+    public void initData(BaseActivity activity, JSONObject object)
     {
-        rivImage.setCornerRadius((float) DimensionUtils.dip2px(context, 10));
+        rivImage.setCornerRadius((float) DimensionUtils.dip2px(activity, 10));
         try {
             String strUrl = object.getString("url_bk");
             String strName = object.getString("cname");
 
             tvName.setText(strName);
-            ImageLoader.getInstance().displayImage(strUrl, rivImage);
+            activity.imageLoader.displayImage(strUrl, rivImage, activity.imageOptions);
         } catch (JSONException e) {
             e.printStackTrace();
         }

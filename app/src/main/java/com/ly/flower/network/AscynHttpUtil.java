@@ -20,7 +20,7 @@ public class AscynHttpUtil {
 	private static AsyncHttpClient httpsclient = new AsyncHttpClient();
 
 	public static final String VERSION_1 						= "1";
-	public static final String VERSION_2 						= "1";
+	public static final String VERSION_2 						= "2";
 	public static final String SERVER_HOST						= "https://www.sunflowerslove.cn/api";
 	public static final String BLS_HEAD							= "/bls/" + VERSION_1;
 	public static final String DISCOVER_HEAD1					= "/discover/" + VERSION_1;

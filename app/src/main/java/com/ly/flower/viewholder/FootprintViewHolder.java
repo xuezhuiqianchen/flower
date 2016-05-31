@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.ly.common.utils.TimeUtils;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +54,7 @@ public class FootprintViewHolder {
         rlShare = (RelativeLayout) llEditBar.findViewById(R.id.rl_share);
     }
 
-    public void initData(JSONObject object)
+    public void initData(BaseActivity activity, JSONObject object)
     {
         try {
             String strTime = object.getString("chinesetime");
@@ -78,7 +79,7 @@ public class FootprintViewHolder {
             }else {
                 ivPraise.setImageResource(R.drawable.praise_press_icon);
             }
-            ImageLoader.getInstance().displayImage(strImageUrl, ivImage);
+            activity.imageLoader.displayImage(strImageUrl, ivImage, activity.imageOptions);
 
             rlPraise.setOnClickListener(new View.OnClickListener() {
                 @Override

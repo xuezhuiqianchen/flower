@@ -124,11 +124,11 @@ public class ClubListAdapter extends BaseListAdapter{
         switch (type)
         {
             case TYPE_FOOTPRINT_TITLE:
-                footprintTitleViewHolder.initData((JSONObject)getItem(position));
+                footprintTitleViewHolder.initData(activity, (JSONObject)getItem(position));
                 break;
 
             case TYPE_FOOTPRINT:
-                footprintViewHolder.initData((JSONObject)getItem(position));
+                footprintViewHolder.initData(activity, (JSONObject)getItem(position));
                 break;
 
             case TYPE_TOPIC:

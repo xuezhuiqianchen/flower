@@ -12,11 +12,14 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.ly.common.utils.Common;
+import com.ly.common.utils.FontManager;
 import com.ly.common.utils.UMSharePlatformUtil;
 import com.ly.flower.R;
 import com.ly.flower.component.ColoredSnackbar;
@@ -24,6 +27,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.message.PushAgent;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -91,7 +95,34 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
                 .build();
         umSharePlatformUtil = new UMSharePlatformUtil(this, Common.UM_APP_KET,
                 Common.WX_APP_ID, Common.WX_APP_KEY, Common.QQ_APP_ID, Common.QQ_APP_KEY);
+//        initSystemBar(this);
         init();
+    }
+
+    private void initFonts() {
+        FontManager.changeFonts(layoutRoot, this);
+    }
+
+    private void initSystemBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(activity, true);
+        }
+        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.theme);
+    }
+
+    @TargetApi(19)
+    private static void setTranslucentStatus(Activity activity, boolean on) {
+        Window win = activity.getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 
     public void setLayoutRootId(int layoutId)

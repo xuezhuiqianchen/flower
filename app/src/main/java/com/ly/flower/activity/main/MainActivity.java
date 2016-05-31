@@ -119,6 +119,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         checkId = R.id.rl_discover;
     }
 
+    public boolean isDiscoveryFragment()
+    {
+        if (checkId == R.id.rl_discover)
+            return true;
+        else
+            return false;
+    }
+
     private void showFragment(String tag) {
         if (AddFragment.TAG == tag)
         {
@@ -222,6 +230,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         bitmap = Blur.fastblur(mInstance, bitmap, 15);
         addFragment.setBackground(bitmap);
         showFragment(AddFragment.TAG);
+        view.destroyDrawingCache();
     }
 
     public void doCheckHomeAction(){

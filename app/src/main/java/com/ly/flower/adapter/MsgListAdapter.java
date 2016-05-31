@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.ly.flower.viewholder.MsgViewHolder;
 import org.json.JSONObject;
 
@@ -12,7 +13,7 @@ import org.json.JSONObject;
  * Created by admin on 2016/3/23.
  */
 public class MsgListAdapter extends BaseListAdapter {
-    private Context context;
+    private BaseActivity activity;
 
     public MsgListAdapter(LayoutInflater inflater) {
         super(inflater);
@@ -31,13 +32,13 @@ public class MsgListAdapter extends BaseListAdapter {
             msgViewHolder = (MsgViewHolder) convertView.getTag();
         }
 
-        msgViewHolder.initData(context, (JSONObject)getItem(position));
+        msgViewHolder.initData(activity, (JSONObject)getItem(position));
 
         return convertView;
     }
 
-    public void setContext(Context context)
+    public void setContext(BaseActivity activity)
     {
-        this.context = context;
+        this.activity = activity;
     }
 }

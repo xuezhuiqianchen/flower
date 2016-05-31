@@ -19,7 +19,6 @@ import com.ly.flower.network.AscynHttpUtil;
 import com.ly.flower.network.SendInfo;
 import com.ly.flower.base.BaseFunction;
 import com.ly.flower.share.MessageHandler;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -130,7 +129,7 @@ public class PostTopicActivity extends BaseActivity {
             final SelectImageViewHolder viewHolder = new SelectImageViewHolder();
             viewHolder.imageView = (ImageView) view.findViewById(R.id.iv_image);
             viewHolder.ivDelete = (ImageView) view.findViewById(R.id.iv_delete);
-            ImageLoader.getInstance().displayImage("file://" + sourceList.get(i), viewHolder.imageView);
+            imageLoader.displayImage("file://" + sourceList.get(i), viewHolder.imageView, imageOptions);
             viewHolder.ivDelete.setTag(sourceList.get(i));
             viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
                 @Override

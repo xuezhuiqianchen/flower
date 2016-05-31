@@ -40,7 +40,7 @@ public class AddFragment implements View.OnClickListener {
     }
 
     public void initView() {
-        rlFragmentView = (RelativeLayout) mInstance.findViewById(R.id.rl_add_fragment);
+        rlFragmentView = (RelativeLayout) mInstance.findViewById(R.id.rl_add_page);
         layoutClub = (RelativeLayout) mInstance.findViewById(R.id.rl_club);
         layoutAddUs = (RelativeLayout) mInstance.findViewById(R.id.rl_add_us);
         layoutInterestCard = (RelativeLayout) mInstance.findViewById(R.id.rl_interest_card);
@@ -60,16 +60,11 @@ public class AddFragment implements View.OnClickListener {
         inBounceAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-//                layoutClub.setVisibility(View.VISIBLE);
-//                layoutInterestCard.setVisibility(View.VISIBLE);
-//                layoutAddUs.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-//                layoutClub.setVisibility(View.VISIBLE);
-//                layoutInterestCard.setVisibility(View.VISIBLE);
-//                layoutAddUs.setVisibility(View.VISIBLE);
+
             }
 
             @Override
@@ -85,6 +80,8 @@ public class AddFragment implements View.OnClickListener {
             @Override
             public void onAnimationEnd(Animation animation) {
                 rlFragmentView.setVisibility(View.GONE);
+                if (!mInstance.isDiscoveryFragment())
+                    mInstance.displayTitleLayout();
             }
 
             @Override
@@ -96,6 +93,7 @@ public class AddFragment implements View.OnClickListener {
     public void onResume()
     {
         rlFragmentView.setVisibility(View.VISIBLE);
+        mInstance.hideTitleLayout();
         refreshView();
     }
 
@@ -110,6 +108,7 @@ public class AddFragment implements View.OnClickListener {
                 break;
             case R.id.rl_interest_card:
                 doClickInterestAction();
+                break;
             default:
                 startOutAnim();
                 break;
@@ -122,7 +121,6 @@ public class AddFragment implements View.OnClickListener {
             DataStructure.uid = GlobalStatic.getSharedString(mInstance, GlobalStatic.UID);
             DataStructure.passwd = GlobalStatic.getSharedString(mInstance, GlobalStatic.PASSWORD);
         }
-
         startInAnim();
     }
 
@@ -133,15 +131,16 @@ public class AddFragment implements View.OnClickListener {
     }
 
     private void doClickClubAction() {
-        startInAnim();
+        mInstance.setChecked(R.id.rl_home);
+        rlFragmentView.setVisibility(View.GONE);
     }
 
     private void doClickAddUsAction() {
-
+        mInstance.showInfoMessage(R.string.tip_no_support);
     }
 
     private void doClickInterestAction() {
-
+        mInstance.showInfoMessage(R.string.tip_no_support);
     }
 
     private void startInAnim()
@@ -149,7 +148,6 @@ public class AddFragment implements View.OnClickListener {
         layoutClub.startAnimation(inBounceAnim);
         layoutAddUs.startAnimation(inBounceAnim);
         layoutInterestCard.startAnimation(inBounceAnim);
-//        rlFragmentView.startAnimation(inBounceAnim);
     }
 
     public void startOutAnim()

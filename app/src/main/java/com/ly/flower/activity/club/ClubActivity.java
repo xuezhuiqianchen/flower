@@ -304,6 +304,8 @@ public class ClubActivity extends BaseActivity implements View.OnClickListener,
         try {
             JSONObject object = new JSONObject(new String(responsebody));
             JSONArray array = object.getJSONArray("data");
+            if (array.length() == 0)
+                return;
             try {
                 for (int i = 0; i < array.length(); i++)
                 {

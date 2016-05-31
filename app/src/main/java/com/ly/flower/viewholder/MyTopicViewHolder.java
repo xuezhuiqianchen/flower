@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ly.common.utils.Common;
 import com.ly.common.utils.DimensionUtils;
 import com.ly.flower.R;
+import com.ly.flower.base.BaseActivity;
 import com.ly.flower.share.Player;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -75,9 +76,9 @@ public class MyTopicViewHolder {
         rlShare = (RelativeLayout) llEditBar.findViewById(R.id.rl_share);
     }
 
-    public void initData(Context context, JSONObject object)
+    public void initData(BaseActivity activity, JSONObject object)
     {
-        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(context, 100));
+        rivPortrait.setCornerRadius((float) DimensionUtils.dip2px(activity, 100));
         try {
             String strPortrait = object.getString("uavatar");
             String strNickname = object.getString("uname");
@@ -98,8 +99,8 @@ public class MyTopicViewHolder {
             tvCommentNum.setText(strCommentNum);
             tvPraiseNum.setText(strPraiseNum);
 
-            ImageLoader.getInstance().displayImage(strPortrait, rivPortrait);
-            ImageLoader.getInstance().displayImage(strImageUrl, ivImage);
+            activity.imageLoader.displayImage(strPortrait, rivPortrait, activity.portraitOptions);
+            activity.imageLoader.displayImage(strImageUrl, ivImage, activity.imageOptions);
 
             rlShare.setOnClickListener(new View.OnClickListener() {
                 @Override

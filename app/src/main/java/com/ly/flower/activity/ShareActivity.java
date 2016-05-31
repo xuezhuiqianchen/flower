@@ -80,7 +80,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
 
     private void fillView() {
         tvTitle.setText(strTitle);
-        ImageLoader.getInstance().displayImage(strIconUrl, ivIcon);
+        imageLoader.displayImage(strIconUrl, ivIcon, imageOptions);
         mController = umSharePlatformUtil.getController();
 
         setTitle(R.string.str_share_to);

@@ -2,7 +2,6 @@ package com.ly.flower.activity.login;
 
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -22,11 +21,6 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener
 import com.umeng.socialize.exception.SocializeException;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Map;
 import cz.msebera.android.httpclient.Header;
 
@@ -132,7 +126,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             strLtype = "0";
             strNickname = info.get("nickname").toString();
             strAvatar = info.get("headimgurl").toString();
-            strThirdUid = info.get("unionid").toString();//openid
+            strThirdUid = info.get("openid").toString();//openid unionid
             strHometown = info.get("country").toString() + info.get("province").toString()
                     + info.get("city").toString();
             if (info.get("sex").toString().equals("2"))
