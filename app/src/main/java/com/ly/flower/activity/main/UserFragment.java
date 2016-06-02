@@ -19,6 +19,7 @@ import com.ly.flower.base.BaseFragment;
 import com.ly.flower.base.BaseFunction;
 import com.ly.flower.network.AscynHttpUtil;
 import com.ly.flower.network.SendInfo;
+import com.ly.flower.share.MessageHandler;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONException;
@@ -113,7 +114,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
         switch (v.getId())
         {
             case R.id.rl_user_info:
-                mInstance.gotoActivity(UserInfoActivity.class, userObject.toString());
+                mInstance.gotoActivityForResult(UserInfoActivity.class, userObject.toString(), MessageHandler.REQUEST_MSG_FRESH_USERINFO);
                 break;
 
             case R.id.v_my_topic:

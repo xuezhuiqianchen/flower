@@ -10,21 +10,23 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.ResponseHandlerInterface;
 import com.ly.flower.R;
 import com.ly.flower.base.BaseActivity;
+import com.ly.flower.base.BaseFunction;
 import com.ly.flower.network.AscynHttpUtil;
 import com.ly.flower.network.SendInfo;
-import com.ly.flower.base.BaseFunction;
 import com.ly.flower.share.MessageHandler;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
@@ -53,29 +55,31 @@ public class EditUserInfoActivity extends BaseActivity {
             {
                 case EDIT_USER_INFO:
                     String data = msg.getData().getString("data");
-                    if (data.equals(""))
+                    if (data.equals("")) {
                         editUserInfo("", "");
-                    try {
-                        JSONArray array = new JSONArray(data);
+                        break;
+                    } else {
+                        try {
+                            JSONArray array = new JSONArray(data);
 
-                        String portrait = "";
-                        String bkg = "";
-                        int i = array.length() - 1;
-                        if (!strBkgUrl.equals("")) {
-                            bkg = array.getJSONObject(i).getString("url");
-                            i--;
+                            String portrait = "";
+                            String bkg = "";
+                            int i = array.length() - 1;
+                            if (!strBkgUrl.equals("")) {
+                                bkg = array.getJSONObject(i).getString("url");
+                                i--;
+                            }
+
+                            if (!strPortrait.equals("")) {
+                                portrait = array.getJSONObject(i).getString("url");
+                            }
+
+                            editUserInfo(bkg, portrait);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-
-                        if (!strPortrait.equals("")) {
-                            portrait = array.getJSONObject(i).getString("url");
-                        }
-
-                        editUserInfo(bkg, portrait);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        break;
                     }
-
-                    break;
             }
 
         }
@@ -153,8 +157,6 @@ public class EditUserInfoActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_save:
-
-
                 changeUserInfo();
                 break;
             case R.id.iv_bg:

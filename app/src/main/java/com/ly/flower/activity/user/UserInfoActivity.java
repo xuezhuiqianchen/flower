@@ -3,17 +3,20 @@ package com.ly.flower.activity.user;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.ly.flower.R;
 import com.ly.flower.base.BaseActivity;
+import com.ly.flower.share.MessageHandler;
 import com.ly.flower.viewholder.MyClubViewHolder;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,6 +87,7 @@ public class UserInfoActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_back:
+                setResult(MessageHandler.RESULT_OK);
                 finish();
                 break;
             case R.id.iv_edit:
@@ -93,6 +97,13 @@ public class UserInfoActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        setResult(MessageHandler.RESULT_OK);
+        return super.onKeyDown(keyCode, event);
+    }
+
 
     private void refreshClubsLayout(JSONArray array)
     {
