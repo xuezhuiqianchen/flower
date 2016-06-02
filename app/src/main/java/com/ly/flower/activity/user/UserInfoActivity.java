@@ -3,18 +3,21 @@ package com.ly.flower.activity.user;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ly.flower.R;
+import com.ly.flower.adapter.MyClubAdapter;
 import com.ly.flower.base.BaseActivity;
+import com.ly.flower.helper.MyItemTouchCallback;
+import com.ly.flower.helper.OnRecyclerItemClickListener;
 import com.ly.flower.share.MessageHandler;
-import com.ly.flower.viewholder.MyClubViewHolder;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONArray;
@@ -30,7 +33,9 @@ public class UserInfoActivity extends BaseActivity {
     private RoundedImageView rivPortrait;
     private TextView tvNickName;
     private TextView tvSignature;
-    private LinearLayout llClubs;
+    private RecyclerView rvClubs;
+    private MyClubAdapter mAdapter;
+    private GridLayoutManager mLayoutManager;
 
     private JSONObject userObject;
 
@@ -65,7 +70,7 @@ public class UserInfoActivity extends BaseActivity {
         rivPortrait = (RoundedImageView) this.findViewById(R.id.riv_portrait);
         tvNickName = (TextView) this.findViewById(R.id.tv_nickname);
         tvSignature = (TextView) this.findViewById(R.id.tv_signature);
-        llClubs = (LinearLayout) this.findViewById(R.id.ll_images_view);
+        rvClubs = (RecyclerView) this.findViewById(R.id.rv_images_club);
     }
 
     private void fillView() {
@@ -107,18 +112,38 @@ public class UserInfoActivity extends BaseActivity {
 
     private void refreshClubsLayout(JSONArray array)
     {
-        final int length = array.length();
-        llClubs.removeAllViews();
-        try {
-            for (int i = 0; i < length; i++) {
-                final RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.item_my_club, llClubs, false);
-                final MyClubViewHolder viewHolder = new MyClubViewHolder(view);
-                viewHolder.initData(this, array.getJSONObject(i));
-                llClubs.addView(view);
-            }//end for
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        rvClubs.removeAllViews();
+        //设置固定大小
+        rvClubs.setHasFixedSize(true);
+        //创建布局
+        mLayoutManager = new GridLayoutManager(this, 3);
+        //给RecyclerView设置布局管理器
+        rvClubs.setLayoutManager(mLayoutManager);
+        //创建适配器，并且设置
+        mAdapter = new MyClubAdapter(this, array);
+        rvClubs.setAdapter(mAdapter);
+
+        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyItemTouchCallback(mAdapter));
+        itemTouchHelper.attachToRecyclerView(rvClubs);
+        rvClubs.addOnItemTouchListener(new OnRecyclerItemClickListener(rvClubs) {
+//            @Override
+//            public void onLongClick(RecyclerView.ViewHolder vh) {
+//                //长按
+//                itemTouchHelper.startDrag(vh);
+//            }
+
+            @Override
+            public void onItemClick(RecyclerView.ViewHolder vh) {
+                super.onItemClick(vh);
+                //点击
+                MyClubAdapter.ViewHolder myClubViewHolder = (MyClubAdapter.ViewHolder)vh;
+                myClubViewHolder.tvName.setFocusable(true);
+                myClubViewHolder.tvName.requestFocus();
+
+
+                System.out.println("点击事件    " + myClubViewHolder.tvName.getText().toString());
+            }
+        });
     }
 
     private void refreshBaseInfo()
