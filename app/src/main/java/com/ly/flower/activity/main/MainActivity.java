@@ -186,11 +186,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         if (checkId == id)
             return;
 
-        if (id != R.id.rl_add)
-        {
-            resetCheckedView();
-        }
-
         switch (id)
         {
             case R.id.rl_home:
@@ -234,6 +229,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void doCheckHomeAction(){
+        resetCheckedView();
         ivHome.setImageResource(R.drawable.home_select_icon);
         showFragment(HomeFragment.TAG);
         setTitle(R.string.str_club);
@@ -241,6 +237,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void doCheckDiscoveryAction(){
+        resetCheckedView();
         ivDiscovery.setImageResource(R.drawable.discovery_select_icon);
         showFragment(DiscoverFragment.TAG);
         setTitle(R.string.str_discover);
@@ -253,6 +250,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             gotoActivityForResult(LoginActivity.class, MessageHandler.REQUEST_MSG_FRAGMENT);
             return false;
         }
+        resetCheckedView();
         ivMsg.setImageResource(R.drawable.msg_select_icon);
         showFragment(MsgFragment.TAG);
         setTitle(R.string.str_msg);
@@ -266,6 +264,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             gotoActivityForResult(LoginActivity.class, MessageHandler.REQUEST_USER_FRAGMENT);
             return false;
         }
+        resetCheckedView();
         ivUser.setImageResource(R.drawable.user_select_icon);
         showFragment(UserFragment.TAG);
         setTitle(R.string.str_me);

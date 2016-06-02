@@ -2,6 +2,8 @@ package com.ly.flower.activity.login;
 
 
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -21,6 +23,10 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener
 import com.umeng.socialize.exception.SocializeException;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.Map;
 import cz.msebera.android.httpclient.Header;
 
@@ -123,10 +129,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
         if (share_media.equals(SHARE_MEDIA.WEIXIN))
         {
+//            try {
+//                String fileName = "weixin.txt";
+//
+//                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+//                    String path = DataStructure.DIRACTOR_CACHE ;
+//                    File dir = new File(path);
+//                    if (!dir.exists()) {
+//                        dir.mkdirs();
+//                    }
+//                    FileOutputStream fos = new FileOutputStream(path + fileName);
+//                    fos.write(info.toString().getBytes());
+//                    fos.close();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
             strLtype = "0";
             strNickname = info.get("nickname").toString();
             strAvatar = info.get("headimgurl").toString();
-            strThirdUid = info.get("openid").toString();//openid unionid
+            strThirdUid = info.get("openid").toString();// unionid
             strHometown = info.get("country").toString() + info.get("province").toString()
                     + info.get("city").toString();
             if (info.get("sex").toString().equals("2"))
@@ -134,7 +156,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 strGender = "0";
             }
         }else if (share_media.equals(SHARE_MEDIA.QQ)){
-            strLtype = "0";
+
+            strLtype = "1";
             strNickname = info.get("screen_name").toString();
             strAvatar = info.get("profile_image_url").toString();
             strThirdUid = info.get("openid").toString();//openid

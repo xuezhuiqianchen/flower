@@ -13,6 +13,6 @@ public class Common {
     public static final String WX_APP_ID = "wx2a1129854f3b73fd";//"wx967daebe835fbeac";
     public static final String WX_APP_KEY = "9f392d4a7c4c1684627cc7dba11d4660";//"5fa9e68ca3970e87a1f83e563c8dcbce";
 
-    public static final String QQ_APP_ID = "100424468";
-    public static final String QQ_APP_KEY = "c7394704798a158208a74ab60104f0ba";
+    public static final String QQ_APP_ID = "1105203383";//"";//100424468
+    public static final String QQ_APP_KEY = "j05UIBcV7UIn2f76";//"c7394704798a158208a74ab60104f0ba";//
 }

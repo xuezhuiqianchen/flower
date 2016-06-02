@@ -4,15 +4,25 @@
     android:layout_height="70dp"
     android:orientation="vertical" 
     android:layout_marginRight="5dp">
-    
-    <ImageView 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="3dp"
+        android:gravity="center"
+        android:textSize="13dp"
+        android:textColor="@color/text_gray_light"
+        android:text="@string/add_image"
+        android:background="@drawable/bg_round_corner_translucent_gray"/>
+
+
+    <ImageView
         android:id="@+id/iv_image"
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/image_icon"
-        android:padding="2dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="fitXY" />
+
 
     <ImageView
         android:id="@+id/iv_delete"

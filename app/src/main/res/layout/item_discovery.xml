@@ -77,16 +77,40 @@
         android:ellipsize="end"
         android:lineSpacingExtra="5dp" />
 
-    <include layout="@layout/item_media_player"
-        android:id="@+id/rl_media_player"
+    <ImageView
+        android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_sub_title"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:src="@drawable/default_image" />
+
+    <TextView
+        android:id="@+id/tv_image_num"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/tv_sub_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="13dp"
+        android:background="#33ffffff"
+        android:text="共3张"/>
+
+    <!--<include layout="@layout/item_media_player"-->
+        <!--android:id="@+id/rl_media_player"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/tv_sub_title"-->
+        <!--android:layout_marginTop="5dp"/>-->
 
     <include layout="@layout/item_edit_bar"
         android:id="@+id/edit_bar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/rl_media_player" />
+        android:layout_below="@id/iv_image" />
 </RelativeLayout>

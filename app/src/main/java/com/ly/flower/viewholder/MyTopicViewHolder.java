@@ -57,16 +57,19 @@ public class MyTopicViewHolder {
         tvTitle = (TextView) parentView.findViewById(R.id.tv_title);
         tvSubTitle = (TextView) parentView.findViewById(R.id.tv_sub_title);
 
-        View view = parentView.findViewById(R.id.rl_media_player);
-        tvImageNum = (TextView) view.findViewById(R.id.tv_image_num);
-        ivImage = (ImageView) view.findViewById(R.id.iv_image);
-        ivPlay = (ImageView) view.findViewById(R.id.iv_play);
-        surfaceView = (SurfaceView) view.findViewById(R.id.surfaceView);
-        ivPlayPause = (ImageView) view.findViewById(R.id.iv_play_pause);
-        tvCurrentTime = (TextView) view.findViewById(R.id.tv_time_current);
-        tvTotalTime = (TextView) view.findViewById(R.id.tv_time_total);
-        skbProgress = (SeekBar) view.findViewById(R.id.seekbar);
-        vMediaPlayerController = view.findViewById(R.id.rl_controller);
+        tvImageNum = (TextView) parentView.findViewById(R.id.tv_image_num);
+        ivImage = (ImageView) parentView.findViewById(R.id.iv_image);
+
+//        View view = parentView.findViewById(R.id.rl_media_player);
+//        tvImageNum = (TextView) view.findViewById(R.id.tv_image_num);
+//        ivImage = (ImageView) view.findViewById(R.id.iv_image);
+//        ivPlay = (ImageView) view.findViewById(R.id.iv_play);
+//        surfaceView = (SurfaceView) view.findViewById(R.id.surfaceView);
+//        ivPlayPause = (ImageView) view.findViewById(R.id.iv_play_pause);
+//        tvCurrentTime = (TextView) view.findViewById(R.id.tv_time_current);
+//        tvTotalTime = (TextView) view.findViewById(R.id.tv_time_total);
+//        skbProgress = (SeekBar) view.findViewById(R.id.seekbar);
+//        vMediaPlayerController = view.findViewById(R.id.rl_controller);
 
         LinearLayout llEditBar = (LinearLayout) parentView.findViewById(R.id.edit_bar);
         tvCommentNum = (TextView) llEditBar.findViewById(R.id.tv_comment_num);
@@ -109,19 +112,20 @@ public class MyTopicViewHolder {
             });
 
             if (strCtype.equals("0")) {
-                setImageViewMode();
+//                setImageViewMode();
                 if (imageArray.length() <= 1) {
                     tvImageNum.setVisibility(View.GONE);
                 }else {
                     tvImageNum.setVisibility(View.VISIBLE);
                 }
                 tvImageNum.setText("共" + String.valueOf(imageArray.length()) + "张");
-            }else {
-                String strVideoUrl = object.getString("url_video");
-                setVidioViewMode(Integer.valueOf(imageObject.getString("width")),
-                        Integer.valueOf(imageObject.getString("height")));
-                initMediaVideo(strVideoUrl);
             }
+//            else {
+//                String strVideoUrl = object.getString("url_video");
+//                setVidioViewMode(Integer.valueOf(imageObject.getString("width")),
+//                        Integer.valueOf(imageObject.getString("height")));
+//                initMediaVideo(strVideoUrl);
+//            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

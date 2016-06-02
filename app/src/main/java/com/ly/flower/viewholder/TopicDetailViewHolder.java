@@ -11,9 +11,7 @@ import com.ly.common.utils.DimensionUtils;
 import com.ly.common.utils.TimeUtils;
 import com.ly.flower.R;
 import com.ly.flower.base.BaseActivity;
-import com.ly.flower.activity.MediaPlayerActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,13 +73,13 @@ public class TopicDetailViewHolder {
             if (strCtype.equals("0")) {
                 ivPlay.setVisibility(View.GONE);
             }else {
-                ivPlay.setVisibility(View.VISIBLE);
-                ivPlay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        activity.gotoActivity(MediaPlayerActivity.class, strVideoUrl);
-                    }
-                });
+//                ivPlay.setVisibility(View.VISIBLE);
+//                ivPlay.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        activity.gotoActivity(MediaPlayerActivity.class, strVideoUrl);
+//                    }
+//                });
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -111,7 +111,7 @@ public class ClubActivity extends BaseActivity implements View.OnClickListener,
                 break;
 
             case R.id.fab_edit:
-                gotoActivity(PostTopicActivity.class, cid);
+//                gotoActivity(PostTopicActivity.class, cid);
                 break;
         }
 
@@ -237,6 +237,11 @@ public class ClubActivity extends BaseActivity implements View.OnClickListener,
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        if (tid.equals("")) {
+            mListView.stopLoadMore();
+            return;
+        }
+
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance, AscynHttpUtil.URL_CLUB_GET_TOPIC_LIST);
         String strInfo = SendInfo.getTopicListClubSendInfo(mInstance, cid, "0", tid, "10");
         AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler(TYPE_TOPIC_MORE));
@@ -249,6 +254,10 @@ public class ClubActivity extends BaseActivity implements View.OnClickListener,
             hid = footprintArray.getJSONObject(footprintArray.length() - 1).getString("hid");
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        if (hid.equals("")) {
+            mListView.stopLoadMore();
+            return;
         }
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance, AscynHttpUtil.URL_CLUB_GET_TOPIC_LIST);
         String strInfo = SendInfo.getTopicListClubSendInfo(mInstance, cid, "0", hid, "10");

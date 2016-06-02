@@ -71,16 +71,19 @@ public class DiscoveryViewHolder {
         tvTitle = (TextView) parentView.findViewById(R.id.tv_title);
         tvSubTitle = (TextView) parentView.findViewById(R.id.tv_sub_title);
 
-        View view = parentView.findViewById(R.id.rl_media_player);
-        tvImageNum = (TextView) view.findViewById(R.id.tv_image_num);
-        ivImage = (ImageView) view.findViewById(R.id.iv_image);
-        ivPlay = (ImageView) view.findViewById(R.id.iv_play);
-        surfaceView = (SurfaceView) view.findViewById(R.id.surfaceView);
-        ivPlayPause = (ImageView) view.findViewById(R.id.iv_play_pause);
-        tvCurrentTime = (TextView) view.findViewById(R.id.tv_time_current);
-        tvTotalTime = (TextView) view.findViewById(R.id.tv_time_total);
-        skbProgress = (SeekBar) view.findViewById(R.id.seekbar);
-        vMediaPlayerController = view.findViewById(R.id.rl_controller);
+        tvImageNum = (TextView) parentView.findViewById(R.id.tv_image_num);
+        ivImage = (ImageView) parentView.findViewById(R.id.iv_image);
+
+//        View view = parentView.findViewById(R.id.rl_media_player);
+//        tvImageNum = (TextView) view.findViewById(R.id.tv_image_num);
+//        ivImage = (ImageView) view.findViewById(R.id.iv_image);
+//        ivPlay = (ImageView) view.findViewById(R.id.iv_play);
+//        surfaceView = (SurfaceView) view.findViewById(R.id.surfaceView);
+//        ivPlayPause = (ImageView) view.findViewById(R.id.iv_play_pause);
+//        tvCurrentTime = (TextView) view.findViewById(R.id.tv_time_current);
+//        tvTotalTime = (TextView) view.findViewById(R.id.tv_time_total);
+//        skbProgress = (SeekBar) view.findViewById(R.id.seekbar);
+//        vMediaPlayerController = view.findViewById(R.id.rl_controller);
 
         LinearLayout llEditBar = (LinearLayout) parentView.findViewById(R.id.edit_bar);
         tvCommentNum = (TextView) llEditBar.findViewById(R.id.tv_comment_num);
@@ -115,9 +118,12 @@ public class DiscoveryViewHolder {
                     imgWidth = Integer.valueOf(strWidth);
                     imgHeight = Integer.valueOf(strLength);
 
-                    int relWidth = Common.DEVICE_SCREEN_WIDTH - DimensionUtils.dip2px(activity, 20);
+                    int relWidth = Common.DEVICE_SCREEN_WIDTH ;
                     int relHeight = imgHeight * relWidth / imgWidth;
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(relWidth, relHeight);
+
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ivImage.getLayoutParams();
+                    layoutParams.width = relWidth;
+                    layoutParams.height = relHeight;
                     ivImage.setLayoutParams(layoutParams);
                     ivImage.setImageResource(R.drawable.default_image);
                     ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -173,7 +179,6 @@ public class DiscoveryViewHolder {
             });
 
             if (strCtype.equals("0")) {
-                setImageViewMode();
                 if (imageArray.length() <= 1) {
                     tvImageNum.setVisibility(View.GONE);
                 }else {

@@ -41,13 +41,6 @@
         </activity>
 
         <activity
-            android:name=".activity.MediaPlayerActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="sensorLandscape">
-        </activity>
-
-        <activity
             android:name=".activity.club.DetailActivity"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar"
@@ -112,11 +105,6 @@
             android:configChanges="orientation|screenSize"
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
 
-        <activity
-            android:name="io.vov.vitamio.activity.InitActivity"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".wxapi.WXEntryActivity"
