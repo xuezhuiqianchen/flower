@@ -77,20 +77,14 @@
         android:gravity="center"
         android:text="@string/str_my_club"/>
 
-    <HorizontalScrollView
-        android:id="@+id/hsv_images_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_images_club"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/tv_club"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:padding="10dp" >
-
-        <LinearLayout
-            android:id="@+id/ll_images_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"  >
-        </LinearLayout>
-    </HorizontalScrollView >
+        android:scrollbars="vertical"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>
