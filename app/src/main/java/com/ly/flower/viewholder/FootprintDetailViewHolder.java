@@ -50,10 +50,17 @@ public class FootprintDetailViewHolder {
             String strNickname = object.getString("uname");
             String strTime = TimeUtils.parseToIntervalTimeFormat(object.getString("time"));
             String strContent = object.getString("title");
-            String strPlace = object.getString("place");
+
             String strCommentNum = object.getString("ccomment");
             String strPraiseNum = object.getString("cpraise");
             JSONArray imagesArray = object.getJSONArray("img");
+
+            String strPlace = "";
+            if (object.has("place")) {
+                object.getString("place");
+            }else {
+                object.getString("sub_title");
+            }
 
             tvNickname.setText(strNickname);
             tvTime.setText(strTime);

@@ -49,8 +49,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
     private final int TYPE_REPLY            = 2;
 
 
-    public static final int TYPE_FOOTPRINT  = 0;
-    public static final int TYPE_TOPIC      = 1;
+    private String type = "";
 
 
     @Override
@@ -89,12 +88,16 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
             JSONArray array = new JSONArray();
             array.put(object);
+
             if (object.has("hid"))
             {
+                type = ShareActivity.FOOTPRINT;
                 detailListAdapter.setType(DetailListAdapter.TYPE_FOOTPRINT_DETAIL);
             }  else {
+                type = ShareActivity.TOPIC;
                 detailListAdapter.setType(DetailListAdapter.TYPE_TOPIC_DETAIL);
             }
+
             detailListAdapter.setData(array);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,7 +117,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
                 break;
 
             case R.id.iv_share:
-                gotoActivity(ShareActivity.class, object.toString());
+                shareAction();
                 break;
 
             case R.id.tv_reply:
@@ -174,6 +177,33 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
         AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler(TYPE_GET_COMMENT));
         if (bProgress)
             showProgressBar(R.string.tip_geting);
+    }
+
+    private void shareAction() {
+        if (!DataStructure.login)
+            return;
+        try {
+            String url = "";
+            JSONArray array = object.getJSONArray("img");
+            if (array.length() > 0) {
+                url = array.getJSONObject(0).getString("url");
+            }
+            JSONObject data = new JSONObject();
+            if (object.has("hid"))
+            {
+                data.put("type", ShareActivity.FOOTPRINT);
+                data.put("id", object.getString("hid"));
+            }else {
+                data.put("type", ShareActivity.TOPIC);
+                data.put("id", object.getString("tid"));
+            }
+
+            data.put("title", object.getString("title"));
+            data.put("img_url", url);
+            gotoActivity(ShareActivity.class, data.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void praiseAction()

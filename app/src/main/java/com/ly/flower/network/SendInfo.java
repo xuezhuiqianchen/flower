@@ -506,7 +506,8 @@ public class SendInfo {
 	 * @return
 	 */
 	public static String getAddTopicClubSendInfo(Context context, String type, String cid,
-												 String title, String sub_title, JSONArray img)
+												 String title, String sub_title, String ctype,
+												 String url_video, JSONArray img)
 	{
 		JSONObject object = getUserUnit(context);
 		try {
@@ -514,6 +515,8 @@ public class SendInfo {
 			object.put("cid", cid);
 			object.put("title", title);
 			object.put("sub_title", sub_title);
+			object.put("ctype", ctype);
+			object.put("url_video", url_video);
 			object.put("img", img);
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -36,11 +36,12 @@
     <string name="str_content">内容</string>
     <string name="str_suggest">意见</string>
 
+    <string name="str_sure">确定</string>
     <string name="str_save">保存</string>
     <string name="str_cancel">取消</string>
     <string name="str_send">发送</string>
     <string name="str_submit">提交</string>
-    <string name="str_share_to">分享至...</string>
+    <string name="str_share_to">分享</string>
     <string name="str_submit_ok">提交成功</string>
 
     <string name="str_clear_cache">清除缓存</string>

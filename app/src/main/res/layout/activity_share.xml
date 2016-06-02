@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/iv_icon"
@@ -12,8 +13,8 @@
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:id="@+id/tv_share_title"
+    <EditText
+        android:id="@+id/et_share_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="30dp"
@@ -22,6 +23,7 @@
         android:gravity="center"
         android:textColor="@color/text_theme"
         android:textSize="13dp"
-        android:text="西湖冰球队，欢迎你"/>
+        android:text="西湖冰球队，欢迎你"
+        android:background="@null"/>
 
 </RelativeLayout>

@@ -108,7 +108,7 @@ public class PostTopicActivity extends BaseActivity {
         if (sourceList.size() > 0)
             uploadImage();
         else
-            postTopic(new JSONArray());
+            postTopic(new JSONArray(), "0", "");
     }
 
     private void refreshImagesLayout()
@@ -179,7 +179,7 @@ public class PostTopicActivity extends BaseActivity {
 
     private String getImagesInfo(int len)
     {
-        return "已选择" + String.valueOf(len) + "张图片，还可选择"+ String.valueOf(8 - len) + "张图片";
+        return "已选择" + String.valueOf(len) + "张图片，还可选择"+ String.valueOf(9 - len) + "张图片";
     }
 
     private void removeImageFromArrayList(String url)
@@ -220,14 +220,15 @@ public class PostTopicActivity extends BaseActivity {
         return true;
     }
 
-    private void postTopic(JSONArray array)
+    private void postTopic(JSONArray array, String ctype, String url_video)
     {
         String strTitle = etTitle.getText().toString();
         String strSubTitle = etContent.getText().toString();
 
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance,
                 AscynHttpUtil.URL_CLUB_ADD_TOPIC);
-        String strInfo = SendInfo.getAddTopicClubSendInfo(mInstance, "0", cid, strTitle, strSubTitle, array);
+        String strInfo = SendInfo.getAddTopicClubSendInfo(mInstance, "0", cid, strTitle,
+                strSubTitle, ctype, url_video, array);
         AscynHttpUtil.post(mInstance, strUrl, strInfo, getResponseHandler(POST_TOPIC));
         showProgressBar(R.string.tip_submiting);
     }
@@ -249,7 +250,7 @@ public class PostTopicActivity extends BaseActivity {
         try {
             JSONObject object = new JSONObject(new String(responsebody));
             JSONArray array = object.getJSONArray("data");
-            postTopic(array);
+            postTopic(array, "0", "");
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -75,6 +75,8 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
                         object.put("tid", object.getString("sid"));
                     }
                     mInstance.gotoActivity(DetailActivity.class, object.toString());
+                    bFirstRecommend = true;
+                    bFirstNewest = true;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

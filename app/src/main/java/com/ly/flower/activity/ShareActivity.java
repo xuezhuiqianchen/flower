@@ -3,12 +3,14 @@ package com.ly.flower.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.ly.flower.R;
 import com.ly.flower.base.BaseActivity;
 import com.ly.flower.network.AscynHttpUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.QQShareContent;
 import com.umeng.socialize.media.QZoneShareContent;
@@ -17,24 +19,34 @@ import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.net.URLEncoder;
+import java.util.HashMap;
 
 
 /**
  * Created by admin on 2016/3/17.
  */
-public class ShareActivity extends BaseActivity implements View.OnClickListener {
+public class ShareActivity extends BaseActivity{
     private ShareActivity mInstance;
     private UMSocialService mController ;
 
     private ImageView ivIcon;
-    private TextView tvTitle;
+    private EditText etTitle;
 
-    private JSONObject object;
     private String strTitle = "" ;
     private String strIconUrl = "";
+    private String strType = "";
+    private String strId = "";
+
+    public UMImage img = null;
+
+    public static final String CLUB        = "0";
+    public static final String FOOTPRINT   = "1";
+    public static final String TOPIC       = "2";
 
 
     @Override
@@ -58,108 +70,72 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
 
     private void initView() {
         ivIcon = (ImageView) this.findViewById(R.id.iv_icon);
-        tvTitle = (TextView) this.findViewById(R.id.tv_share_title);
+        etTitle = (EditText) this.findViewById(R.id.et_share_title);
     }
 
     private void getData() {
         Intent intent = getIntent();
         try {
-            object = new JSONObject(intent.getStringExtra("data"));
-            if (object.has("title"))
-            {
-                strTitle = object.getString("title");
-                strIconUrl = object.getJSONArray("img").getJSONObject(0).getString("url");
-            }else {
-                strTitle = object.getString("cname");
-                strIconUrl = object.getString("url_bk");
-            }
+            JSONObject object = new JSONObject(intent.getStringExtra("data"));
+            strTitle = object.getString("title");
+            strIconUrl = object.getString("img_url");
+            strType = object.getString("type");
+            strId = object.getString("id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void fillView() {
-        tvTitle.setText(strTitle);
+        img = new UMImage(this, strIconUrl);
+        etTitle.setText(strTitle);
         imageLoader.displayImage(strIconUrl, ivIcon, imageOptions);
         mController = umSharePlatformUtil.getController();
 
         setTitle(R.string.str_share_to);
         setLeftActionVisiable();
+        setRightText(R.string.str_sure);
     }
 
     @Override
-    public void onClick(View v) {
-        super.onClick(v);
-//        mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
-//                SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE);
-//        mController.openShare(mInstance, false);
+    public void doClickLeftAction() {
+        finish();
     }
 
-    /**
-     * 根据不同的平台设置不同的分享内容</br>
-     */
-    private void setShareContent() {
-        String strTargetUrl = "";
-        String strId;
+    @Override
+    public void doClickRightTextAction() {
+        strTitle = etTitle.getText().toString();
+        share(getShareUrl(), SHARE_MEDIA.WEIXIN_CIRCLE, null);
+    }
 
-        String strUrlDecodeTitle = URLEncoder.encode(strTitle);
+    public void share(String url, SHARE_MEDIA type, View view)
+    {
+        umSharePlatformUtil.share(img, strTitle, strTitle, url, type, view);
+    }
 
-        try {
+    public String getShareUrl() {
+        String url = "";
 
-            if (object.has("cid")) {
-                strId = object.getString("cid");
-                strTargetUrl = AscynHttpUtil.URL_SHARE_CLUB + "cid=" + strId + "&title=" +
-                        strUrlDecodeTitle;
-            }else if (object.has("tid")) {
-                strId = object.getString("tid");
-                strTargetUrl = AscynHttpUtil.URL_SHARE_TOPIC + "tid=" + strId + "&title=" +
-                        strUrlDecodeTitle;
-            }else if (object.has("hid")) {
-                strId = object.getString("hid");
-                strTargetUrl = AscynHttpUtil.URL_SHARE_HISTORY + "hid=" + strId + "&title=" +
-                        strUrlDecodeTitle;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        switch (strType)
+        {
+            case CLUB:
+                url = AscynHttpUtil.URL_SHARE_CLUB + "cid=";
+                break;
+
+            case FOOTPRINT:
+                url = AscynHttpUtil.URL_SHARE_TOPIC + "tid=";
+                break;
+
+            case TOPIC:
+                url = AscynHttpUtil.URL_SHARE_HISTORY + "hid=";
+                break;
+
+            default:
+                return url;
         }
 
+        url += strId + "&title=" + strTitle;
 
-        // 配置SSO
-
-        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(mInstance,
-                "100424468", "c7394704798a158208a74ab60104f0ba");
-        qZoneSsoHandler.addToSocialSDK();
-        mController.setShareContent("花朵分享");
-
-        UMImage image = new UMImage(mInstance, R.drawable.temp1);
-
-
-        //QQ空间
-        QZoneShareContent qZoneShareContent = new QZoneShareContent();
-        qZoneShareContent.setTitle(strTitle);
-        qZoneShareContent.setTargetUrl(strTargetUrl);
-        qZoneShareContent.setShareMedia(image);
-        mController.setShareMedia(qZoneShareContent);
-
-        //微信
-        WeiXinShareContent weixinContent = new WeiXinShareContent();
-        weixinContent.setTitle(strTitle);
-        weixinContent.setTargetUrl(strTargetUrl);
-        weixinContent.setShareMedia(image);
-        mController.setShareMedia(weixinContent);
-
-        //微信朋友圈
-        CircleShareContent circleMedia = new CircleShareContent();
-        circleMedia.setTitle(strTitle);
-        circleMedia.setTargetUrl(strTargetUrl);
-        circleMedia.setShareMedia(image);
-        mController.setShareMedia(circleMedia);
-
-        //QQ
-        QQShareContent qqShareContent = new QQShareContent();
-        qqShareContent.setTitle(strTitle);
-        qqShareContent.setShareMedia(image);
-        qqShareContent.setTargetUrl(strTargetUrl);
-        mController.setShareMedia(qqShareContent);
+        return url;
     }
 }

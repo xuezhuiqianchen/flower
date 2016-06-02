@@ -1,6 +1,5 @@
 package com.ly.flower.viewholder;
 
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.SurfaceView;
@@ -25,6 +24,7 @@ import com.ly.flower.network.SendInfo;
 import com.ly.flower.share.MessageHandler;
 import com.ly.flower.share.Player;
 import com.makeramen.roundedimageview.RoundedImageView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,9 +32,10 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 /**
- * Created by admin on 2016/3/18.
+ * Created by admin on 2016/6/2.
  */
-public class DiscoveryViewHolder {
+public class TopicViewHolder {
+
     private View container;
     private RoundedImageView rivPortrait ;
     private TextView tvNickname;
@@ -45,15 +46,6 @@ public class DiscoveryViewHolder {
     private TextView tvSubTitle;
     private TextView tvImageNum;
     private ImageView ivImage;
-    private ImageView ivPlay;
-
-    private SurfaceView surfaceView;
-    private SeekBar skbProgress;
-    private Player player;
-    private TextView tvTotalTime;
-    private TextView tvCurrentTime;
-    private ImageView ivPlayPause;
-    private View vMediaPlayerController;
 
     private TextView tvCommentNum;
     private TextView tvPraiseNum;
@@ -62,7 +54,7 @@ public class DiscoveryViewHolder {
     private RelativeLayout rlShare;
 
 
-    public DiscoveryViewHolder(View parentView)
+    public TopicViewHolder(View parentView)
     {
         container = parentView;
         rivPortrait = (RoundedImageView) parentView.findViewById(R.id.riv_portrait);
@@ -74,17 +66,6 @@ public class DiscoveryViewHolder {
 
         tvImageNum = (TextView) parentView.findViewById(R.id.tv_image_num);
         ivImage = (ImageView) parentView.findViewById(R.id.iv_image);
-
-//        View view = parentView.findViewById(R.id.rl_media_player);
-//        tvImageNum = (TextView) view.findViewById(R.id.tv_image_num);
-//        ivImage = (ImageView) view.findViewById(R.id.iv_image);
-//        ivPlay = (ImageView) view.findViewById(R.id.iv_play);
-//        surfaceView = (SurfaceView) view.findViewById(R.id.surfaceView);
-//        ivPlayPause = (ImageView) view.findViewById(R.id.iv_play_pause);
-//        tvCurrentTime = (TextView) view.findViewById(R.id.tv_time_current);
-//        tvTotalTime = (TextView) view.findViewById(R.id.tv_time_total);
-//        skbProgress = (SeekBar) view.findViewById(R.id.seekbar);
-//        vMediaPlayerController = view.findViewById(R.id.rl_controller);
 
         LinearLayout llEditBar = (LinearLayout) parentView.findViewById(R.id.edit_bar);
         tvCommentNum = (TextView) llEditBar.findViewById(R.id.tv_comment_num);
@@ -186,28 +167,9 @@ public class DiscoveryViewHolder {
                 }
                 tvImageNum.setText("共" + String.valueOf(imageArray.length()) + "张");
             }
-            /**
-             * 暂时不做视频这块
-             * time：2016.05.25
-             else {
-             String strVideoUrl = object.getString("url_video");
-             setVidioViewMode(Integer.valueOf(imageObject.getString("width")),
-             Integer.valueOf(imageObject.getString("height")));
-             initMediaVideo(strVideoUrl);
-             }
-             */
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    private void setImageViewMode()
-    {
-        surfaceView.setVisibility(View.GONE);
-        ivImage.setVisibility(View.VISIBLE);
-        ivPlay.setVisibility(View.GONE);
-        tvImageNum.setVisibility(View.VISIBLE);
-        vMediaPlayerController.setVisibility(View.GONE);
     }
 
     private void shareAction(BaseActivity activity, JSONObject object) {
@@ -220,8 +182,8 @@ public class DiscoveryViewHolder {
                 url = array.getJSONObject(0).getString("url");
             }
             JSONObject data = new JSONObject();
-            data.put("type", object.getString("type"));
-            data.put("id", object.getString("sid"));
+            data.put("type", ShareActivity.TOPIC);
+            data.put("id", object.getString("tid"));
             data.put("title", object.getString("title"));
             data.put("img_url", url);
             activity.gotoActivity(ShareActivity.class, data.toString());
@@ -234,12 +196,11 @@ public class DiscoveryViewHolder {
         if (!DataStructure.login)
             return;
         String osubtype = "";
-        String ctype = "";
+        String ctype = ShareActivity.TOPIC;
         String sid = "";
         try {
             osubtype = object.getString("bpraise");
-            ctype = object.getString("type");
-            sid = object.getString("sid");
+            sid = object.getString("tid");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -253,7 +214,7 @@ public class DiscoveryViewHolder {
 
 
     private void praiseNetOperation(final BaseActivity activity, final Handler handler,
-                               final String osubtype, final String ctype, final String sid)
+                                    final String osubtype, final String ctype, final String sid)
     {
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(activity, AscynHttpUtil.URL_USER_OPERATION);
         String strInfo = SendInfo.getUserOperationSendInfo(activity, "0", osubtype, ctype, sid);
@@ -276,54 +237,6 @@ public class DiscoveryViewHolder {
                 activity.dismissProgressBar();
             }
         });
-    }
-
-    private void initMediaVideo(final String url)
-    {
-        player = new Player(surfaceView, skbProgress);
-        ivPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (player == null)
-                {
-                    player = new Player(surfaceView, skbProgress);
-                }
-                player.playUrl(url);
-                surfaceView.setVisibility(View.VISIBLE);
-                ivImage.setVisibility(View.GONE);
-                ivPlay.setVisibility(View.GONE);
-            }
-        });
-
-        ivPlayPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player.playPause();
-            }
-        });
-    }
-
-    private void setVidioViewMode(int width, int height)
-    {
-        int rHeight = Common.DEVICE_SCREEN_WIDTH * height / width;
-        changeSurfaceViewSize(surfaceView, Common.DEVICE_SCREEN_WIDTH, rHeight);
-        surfaceView.setVisibility(View.GONE);
-        ivPlay.setVisibility(View.VISIBLE);
-        ivImage.setVisibility(View.VISIBLE);
-        tvImageNum.setVisibility(View.GONE);
-        vMediaPlayerController.setVisibility(View.VISIBLE);
-    }
-
-    public void changeSurfaceViewSize(SurfaceView view, int width, int height){
-
-        RelativeLayout.LayoutParams params  =
-                new RelativeLayout.LayoutParams(width, height);
-
-        params.leftMargin = 0;
-        params.topMargin  = 0;
-
-        view.setLayoutParams(params);
-//      view.getHolder().setFixedSize(width, height);
     }
 
 }

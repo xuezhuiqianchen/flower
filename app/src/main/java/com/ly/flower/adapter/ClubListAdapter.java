@@ -8,13 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.ly.flower.R;
+import com.ly.flower.activity.ShareActivity;
 import com.ly.flower.base.BaseActivity;
 import com.ly.flower.share.MessageHandler;
 import com.ly.flower.viewholder.DiscoveryViewHolder;
 import com.ly.flower.viewholder.FootprintTitleViewHolder;
 import com.ly.flower.viewholder.FootprintViewHolder;
 import com.ly.flower.viewholder.MemberViewHolder;
+import com.ly.flower.viewholder.TopicViewHolder;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -32,17 +36,7 @@ public class ClubListAdapter extends BaseListAdapter{
     private static final int TYPE_COUNT = 4;
     private int type = TYPE_FOOTPRINT;
 
-    private Handler mHandler = new Handler(){
-        public void handleMessage(Message msg) {
-            Bundle data = msg.getData();
-            switch (msg.what) {
-                case MessageHandler.PRISE_OPERATION:
-//                    praiseOperation(data.getString("cid"), data.getString("osubtype"));
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
+    private Handler mHandler;
 
     public ClubListAdapter(LayoutInflater inflater) {
         super(inflater);
@@ -67,7 +61,7 @@ public class ClubListAdapter extends BaseListAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         FootprintTitleViewHolder footprintTitleViewHolder = null;
         FootprintViewHolder footprintViewHolder = null;
-        DiscoveryViewHolder discoveryViewHolder = null;
+        TopicViewHolder topicViewHolder = null;
         MemberViewHolder memberViewHolder = null;
 
         int type = getItemViewType(position);
@@ -89,8 +83,8 @@ public class ClubListAdapter extends BaseListAdapter{
 
                 case TYPE_TOPIC:
                     convertView = inflater.inflate(R.layout.item_discovery, parent, false);
-                    discoveryViewHolder = new DiscoveryViewHolder(convertView);
-                    convertView.setTag(discoveryViewHolder);
+                    topicViewHolder = new TopicViewHolder(convertView);
+                    convertView.setTag(topicViewHolder);
                     break;
 
                 case TYPE_MEMBER:
@@ -111,7 +105,7 @@ public class ClubListAdapter extends BaseListAdapter{
                     break;
 
                 case TYPE_TOPIC:
-                    discoveryViewHolder = (DiscoveryViewHolder) convertView.getTag();
+                    topicViewHolder = (TopicViewHolder) convertView.getTag();
                     break;
 
                 case TYPE_MEMBER:
@@ -128,11 +122,11 @@ public class ClubListAdapter extends BaseListAdapter{
                 break;
 
             case TYPE_FOOTPRINT:
-                footprintViewHolder.initData(activity, (JSONObject)getItem(position));
+                footprintViewHolder.initData(activity, (JSONObject)getItem(position), mHandler);
                 break;
 
             case TYPE_TOPIC:
-                discoveryViewHolder.initData(activity, (JSONObject)getItem(position), mHandler);
+                topicViewHolder.initData(activity, (JSONObject)getItem(position), mHandler);
                 break;
 
             case TYPE_MEMBER:
@@ -142,6 +136,7 @@ public class ClubListAdapter extends BaseListAdapter{
 
         return convertView;
     }
+
 
     public void setData(JSONArray array, int type)
     {
@@ -153,5 +148,10 @@ public class ClubListAdapter extends BaseListAdapter{
     public void setContext(BaseActivity activity)
     {
         this.activity = activity;
+    }
+
+    public void setHandler(Handler handler)
+    {
+        this.mHandler = handler;
     }
 }

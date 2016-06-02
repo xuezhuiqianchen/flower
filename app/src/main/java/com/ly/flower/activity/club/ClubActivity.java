@@ -2,6 +2,9 @@ package com.ly.flower.activity.club;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +23,14 @@ import com.ly.flower.component.XListView;
 import com.ly.flower.network.AscynHttpUtil;
 import com.ly.flower.network.SendInfo;
 import com.ly.flower.base.BaseFunction;
+import com.ly.flower.share.MessageHandler;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -51,7 +59,18 @@ public class ClubActivity extends BaseActivity implements View.OnClickListener,
     private static final int TYPE_FOOTPRINT_MORE    = 101;
     private static final int TYPE_TOPIC_MORE        = 102;
 
-
+    private Handler mHandler = new Handler(){
+        public void handleMessage(Message msg) {
+            Bundle data = msg.getData();
+            switch (msg.what) {
+                case MessageHandler.PRISE_OPERATION:
+                    praiseOperation(data.getString("cid"), data.getString("osubtype"),
+                            data.getString("ctype"));
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     public void onResume()
@@ -104,14 +123,20 @@ public class ClubActivity extends BaseActivity implements View.OnClickListener,
 
             case R.id.iv_edit:
                 try {
-                    gotoActivity(ShareActivity.class, footprintArray.getJSONObject(0).toString());
+                    JSONObject object = footprintArray.getJSONObject(0);
+                    JSONObject data = new JSONObject();
+                    data.put("type", ShareActivity.CLUB);
+                    data.put("id", object.getString("cid"));
+                    data.put("title", object.getString("cname"));
+                    data.put("img_url", object.getString("url_bk"));
+                    gotoActivity(ShareActivity.class, data.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
 
             case R.id.fab_edit:
-//                gotoActivity(PostTopicActivity.class, cid);
+                gotoActivity(PostTopicActivity.class, cid);
                 break;
         }
 
@@ -173,6 +198,7 @@ public class ClubActivity extends BaseActivity implements View.OnClickListener,
         fabEditTopic.setVisibility(View.GONE);
         clubListAdapter = new ClubListAdapter(inflater);
         clubListAdapter.setContext(mInstance);
+        clubListAdapter.setHandler(mHandler);
         mListView.setAdapter(clubListAdapter);
         mListView.setXListViewListener(this);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -194,6 +220,46 @@ public class ClubActivity extends BaseActivity implements View.OnClickListener,
         });
 
         fabEditTopic.setOnClickListener(this);
+    }
+
+    public void praiseOperation(String cid, String osubtype, String ctype) {
+        switch (ctype) {
+            case ShareActivity.FOOTPRINT:
+                footprintArray = changeData(footprintArray, cid, osubtype, "hid");
+                break;
+
+            case ShareActivity.TOPIC:
+                topicArray = changeData(topicArray, cid, osubtype, "tid");
+                break;
+        }
+        if (rgMenu.getCheckedRadioButtonId() == R.id.radio_button1)
+            clubListAdapter.setData(footprintArray, ClubListAdapter.TYPE_FOOTPRINT);
+        else if (rgMenu.getCheckedRadioButtonId() == R.id.radio_button2)
+            clubListAdapter.setData(topicArray, ClubListAdapter.TYPE_TOPIC);
+        else if (rgMenu.getCheckedRadioButtonId() == R.id.radio_button3)
+            return;
+    }
+
+    private JSONArray changeData(JSONArray array, String cid, String osubtype, String idKey) {
+        try {
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                if (object.getString(idKey).equals(cid)) {
+                    int cpraise = Integer.valueOf(object.getString("cpraise"));
+                    if (osubtype.equals("0")) {
+                        cpraise--;
+                    }else {
+                        cpraise++;
+                    }
+                    object.put("cpraise", String.valueOf(cpraise));
+                    object.put("bpraise", osubtype);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return array;
     }
 
     private void getFootprintListData(boolean refresh)

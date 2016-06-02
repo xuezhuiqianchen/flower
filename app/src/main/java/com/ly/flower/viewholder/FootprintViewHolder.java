@@ -1,14 +1,23 @@
 package com.ly.flower.viewholder;
 
+import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.ly.common.utils.TimeUtils;
 import com.ly.flower.R;
+import com.ly.flower.activity.ShareActivity;
 import com.ly.flower.base.BaseActivity;
+import com.ly.flower.base.BaseFunction;
+import com.ly.flower.base.DataStructure;
+import com.ly.flower.network.AscynHttpUtil;
+import com.ly.flower.network.SendInfo;
+import com.ly.flower.share.MessageHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +26,8 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by admin on 2016/3/24.
@@ -54,7 +65,7 @@ public class FootprintViewHolder {
         rlShare = (RelativeLayout) llEditBar.findViewById(R.id.rl_share);
     }
 
-    public void initData(BaseActivity activity, JSONObject object)
+    public void initData(final BaseActivity activity, final JSONObject object, final Handler handler)
     {
         try {
             String strTime = object.getString("chinesetime");
@@ -84,37 +95,96 @@ public class FootprintViewHolder {
             rlPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (strIsPraise.equals("0")) {
-                        ivPraise.setImageResource(R.drawable.praise_press_icon);
-                    }else {
-                        ivPraise.setImageResource(R.drawable.praise_icon);
-                    }
+                    praiseAction(activity, handler, object);
                 }
             });
 
             rlShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    shareAction(activity, object);
                 }
             });
 
             if (strCtype.equals("0")) {
-                setImageViewMode();
                 if (imageArray.length() <= 1) {
                     tvImageNum.setVisibility(View.GONE);
                 }else {
                     tvImageNum.setVisibility(View.VISIBLE);
                 }
                 tvImageNum.setText("共" + String.valueOf(imageArray.length()) + "张");
-            }else {
-                setVidioViewMode();
-                tvImageNum.setText("视频");
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void shareAction(BaseActivity activity, JSONObject object) {
+        if (!DataStructure.login)
+            return;
+        try {
+            String url = "";
+            JSONArray array = object.getJSONArray("img");
+            if (array.length() > 0) {
+                url = array.getJSONObject(0).getString("url");
+            }
+            JSONObject data = new JSONObject();
+            data.put("type", ShareActivity.FOOTPRINT);
+            data.put("id", object.getString("hid"));
+            data.put("title", object.getString("title"));
+            data.put("img_url", url);
+            activity.gotoActivity(ShareActivity.class, data.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void praiseAction(BaseActivity activity, Handler handler, JSONObject object){
+        if (!DataStructure.login)
+            return;
+        String osubtype = "";
+        String ctype = ShareActivity.FOOTPRINT;//足迹
+        String sid = "";
+        try {
+            osubtype = object.getString("bpraise");
+            sid = object.getString("hid");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (osubtype.equals("0")) {
+            osubtype = "1";
+        } else {
+            osubtype = "0";
+        }
+        praiseNetOperation(activity, handler, osubtype, ctype, sid);
+    }
+
+
+    private void praiseNetOperation(final BaseActivity activity, final Handler handler,
+                                    final String osubtype, final String ctype, final String sid)
+    {
+        String strUrl = AscynHttpUtil.getAbsoluteUrlString(activity, AscynHttpUtil.URL_USER_OPERATION);
+        String strInfo = SendInfo.getUserOperationSendInfo(activity, "0", osubtype, ctype, sid);
+        activity.showProgressBar(R.string.tip_submiting);
+        AscynHttpUtil.post(activity, strUrl, strInfo, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int arg0, Header[] headers, byte[] responsebody) {
+                activity.dismissProgressBar();
+                if (BaseFunction.verifyResult(new String(responsebody), activity.clSnackContainer)) {
+                    Bundle data = new Bundle();
+                    data.putString("cid", sid);
+                    data.putString("osubtype", osubtype);
+                    data.putString("ctype", ctype);
+                    MessageHandler.sendMessage(handler, MessageHandler.PRISE_OPERATION, data);
+                }
+            }
+
+            @Override
+            public void onFailure(int arg0, Header[] headers, byte[] responsebody, Throwable err) {
+                activity.dismissProgressBar();
+            }
+        });
     }
 
     private void setImageViewMode()

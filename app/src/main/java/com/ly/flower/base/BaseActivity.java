@@ -47,6 +47,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     public UMSharePlatformUtil umSharePlatformUtil;
     public ImageLoader imageLoader;
     public DisplayImageOptions imageOptions, portraitOptions;
+    private int systemBarColor = R.color.theme;
 
     public abstract void init();
 
@@ -95,8 +96,8 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
                 .build();
         umSharePlatformUtil = new UMSharePlatformUtil(this, Common.UM_APP_KET,
                 Common.WX_APP_ID, Common.WX_APP_KEY, Common.QQ_APP_ID, Common.QQ_APP_KEY);
-//        initSystemBar(this);
         init();
+        initSystemBar(this);
     }
 
     private void initFonts() {
@@ -109,8 +110,13 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         }
         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.theme);
+        tintManager.setStatusBarTintResource(systemBarColor);
     }
+
+    public void setSystemBarColor(int rid) {
+        this.systemBarColor = rid;
+    }
+
 
     @TargetApi(19)
     private static void setTranslucentStatus(Activity activity, boolean on) {

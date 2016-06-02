@@ -86,7 +86,8 @@ public class UMSharePlatformUtil {
                     @Override
                     public void onComplete(SHARE_MEDIA platform, int eCode,SocializeEntity entity) {
                         if (eCode == 200) {
-                            layout.setVisibility(View.GONE);
+                            if (layout != null)
+                                layout.setVisibility(View.GONE);
                             Toast.makeText(mContext, "分享成功.", Toast.LENGTH_SHORT).show();
                         } else {
                             String eMsg = "";
@@ -96,7 +97,8 @@ public class UMSharePlatformUtil {
                             Toast.makeText(mContext, "分享失败[" + eCode + "] " +
                                     eMsg,Toast.LENGTH_SHORT).show();
                         }
-                        layout.setVisibility(View.GONE);
+                        if (layout != null)
+                            layout.setVisibility(View.GONE);
                     }
                 });
     }
