@@ -1,1 +1,1 @@
-include ':app', ':PushSDK', ':multi-image-selector', ':VitamioBundle', ':vitamio'
+include ':app', ':PushSDK', ':multi-image-selector'

@@ -1,6 +1,8 @@
 package com.ly.flower.viewholder;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.SurfaceView;
@@ -22,9 +24,13 @@ import com.ly.flower.base.BaseFunction;
 import com.ly.flower.base.DataStructure;
 import com.ly.flower.network.AscynHttpUtil;
 import com.ly.flower.network.SendInfo;
+import com.ly.flower.share.ImageInfo;
 import com.ly.flower.share.MessageHandler;
 import com.ly.flower.share.Player;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,25 +118,7 @@ public class DiscoveryViewHolder {
                 strImageUrl = imageObject.getString("url");
                 String strWidth = imageObject.getString("width");
                 String strLength = imageObject.getString("height");
-                int imgWidth = 0;
-                int imgHeight = 0;
-
-                try{
-                    imgWidth = Integer.valueOf(strWidth);
-                    imgHeight = Integer.valueOf(strLength);
-
-                    int relWidth = Common.DEVICE_SCREEN_WIDTH ;
-                    int relHeight = imgHeight * relWidth / imgWidth;
-
-                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ivImage.getLayoutParams();
-                    layoutParams.width = relWidth;
-                    layoutParams.height = relHeight;
-                    ivImage.setLayoutParams(layoutParams);
-                    ivImage.setImageResource(R.drawable.default_image);
-                    ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
+                showImage(activity, strWidth, strLength, strImageUrl);
             } else {
                 tvImageNum.setVisibility(View.GONE);
                 ivImage.setVisibility(View.GONE);
@@ -162,7 +150,6 @@ public class DiscoveryViewHolder {
                 ivPraise.setImageResource(R.drawable.praise_press_icon);
             }
             activity.imageLoader.displayImage(strPortrait, rivPortrait, activity.portraitOptions);
-            activity.imageLoader.displayImage(strImageUrl, ivImage, activity.imageOptions);
 
             rlPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -208,6 +195,47 @@ public class DiscoveryViewHolder {
         ivPlay.setVisibility(View.GONE);
         tvImageNum.setVisibility(View.VISIBLE);
         vMediaPlayerController.setVisibility(View.GONE);
+    }
+
+    private void showImage(BaseActivity activity, String strWidth, String strLength, String strImageUrl) {
+        int imgWidthPx = 0;
+        int imgHeightPx = 0;
+        boolean bBig = false;
+
+        try{
+            imgWidthPx = Integer.valueOf(strWidth);
+            imgHeightPx = Integer.valueOf(strLength);
+            final ImageInfo imageInfo = new ImageInfo(activity, imgWidthPx, imgHeightPx);
+
+            activity.imageLoader.displayImage(strImageUrl, ivImage, activity.imageOptions, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String s, View view) {
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                    if (imageInfo.isSpecial()) {
+                        bitmap = imageInfo.clipBitmap(bitmap);
+                    }
+
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ivImage.getLayoutParams();
+                    layoutParams.width = imageInfo.getDisplayWidth();
+                    layoutParams.height = imageInfo.getDisplayHeight();
+                    ivImage.setLayoutParams(layoutParams);
+                    ivImage.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onLoadingCancelled(String s, View view) {
+                }
+            });
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void shareAction(BaseActivity activity, JSONObject object) {

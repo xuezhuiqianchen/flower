@@ -38,8 +38,8 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     private RadioGroup rgMenu;
     private XListView lvDiscoveries;
     private DiscoveriesListAdapter discoveriesListAdapter;
-    private int recommenPpage = 1;
-    private int newestPpage = 1;
+    private int recommenPage = 1;
+    private int newestPage = 1;
 
     public DiscoverFragment(MainActivity instance, LayoutInflater inflater) {
         super(instance, inflater);
@@ -68,11 +68,16 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
                 JSONObject object = (JSONObject) parent.getItemAtPosition(position);
                 try {
                     //1:足迹;2:话题
-                    if (object.getString("type").equals("1")) {
+                    if(object.getString("type").equals("1")){
                         object.put("hid", object.getString("sid"));
                         object.put("place", object.getString("sub_title"));
-                    } else {
+                        object.put("source", object.getString("url_video"));
+                        object.put("ctime", object.getString("time"));
+                        object.put("time", object.getString("updatetime"));
+                        object.put("chinesetime", "");
+                    }else {
                         object.put("tid", object.getString("sid"));
+                        object.put("mlevel", "");
                     }
                     mInstance.gotoActivity(DetailActivity.class, object.toString());
                     bFirstRecommend = true;
@@ -111,11 +116,11 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
         }
         int page = 1;
         if (TYPE_RECOMMEND == type) {
-            page = recommenPpage;
-            recommenPpage++;
+            page = recommenPage;
+            recommenPage++;
         } else {
-            page = newestPpage;
-            newestPpage++;
+            page = newestPage;
+            newestPage++;
         }
 
         String strUrl = AscynHttpUtil.getAbsoluteUrlString(mInstance,

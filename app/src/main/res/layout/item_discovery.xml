@@ -79,20 +79,21 @@
 
     <ImageView
         android:id="@+id/iv_image"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_sub_title"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:src="@drawable/default_image" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_image"
+        android:background="@color/theme"/>
 
     <TextView
         android:id="@+id/tv_image_num"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_below="@id/tv_sub_title"
-        android:layout_alignParentRight="true"
+        android:layout_alignRight="@id/iv_image"
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:gravity="center"
