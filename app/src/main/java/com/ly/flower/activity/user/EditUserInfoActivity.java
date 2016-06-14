@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -20,11 +23,14 @@ import com.ly.flower.network.AscynHttpUtil;
 import com.ly.flower.network.SendInfo;
 import com.ly.flower.share.MessageHandler;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.opensource.imagecrop.CropConfig;
+import com.opensource.imagecrop.CropImageActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -92,16 +98,28 @@ public class EditUserInfoActivity extends BaseActivity {
         super.onActivityResult(reqCode, resultCode, data);
         if (resultCode == RESULT_OK)
         {
-            String path = data.getStringArrayListExtra(
-                    MultiImageSelectorActivity.EXTRA_RESULT).get(0);
-            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            if(reqCode == MessageHandler.REQUEST_CODE_CROP_BG_IMAGE) {
+                if(null != file) {
+                    Bitmap bm = BitmapFactory.decodeFile(file.getPath());
+                    strBkgUrl = file.getPath();
+                    ivBkg.setImageBitmap(bm);
+                }
+            } else if(reqCode == MessageHandler.REQUEST_CODE_CROP_PORTRAIT_IMAGE) {
+                if(null != file) {
+                    Bitmap bm = BitmapFactory.decodeFile(file.getPath());
+                    strPortrait = file.getPath();
+                    rivPortrait.setImageBitmap(bm);
+                }
+            } else {
+                String path = data.getStringArrayListExtra(
+                        MultiImageSelectorActivity.EXTRA_RESULT).get(0);
 
-            if (reqCode == MessageHandler.REQUEST_CODE_SELECT_BKG) {
-                strBkgUrl = path;
-                ivBkg.setImageBitmap(bitmap);
-            }else if (reqCode == MessageHandler.REQUEST_CODE_SELECT_PORTRAIT) {
-                strPortrait = path;
-                rivPortrait.setImageBitmap(bitmap);
+                if (reqCode == MessageHandler.REQUEST_CODE_SELECT_BKG) {
+                    gotoCrop(path, MessageHandler.REQUEST_CODE_SELECT_BKG);
+
+                }else if (reqCode == MessageHandler.REQUEST_CODE_SELECT_PORTRAIT) {
+                    gotoCrop(path, MessageHandler.REQUEST_CODE_SELECT_PORTRAIT);
+                }
             }
         }
     }
@@ -271,5 +289,35 @@ public class EditUserInfoActivity extends BaseActivity {
         intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
         intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, defaultList);
         instance.startActivityForResult(intent, request);
+    }
+
+    File file = null;
+    private void gotoCrop(String path, int cropType) {
+        Uri uri = Uri.fromFile(new File(path));
+        Intent intent = new Intent(this, CropImageActivity.class);
+        intent.setData(uri);
+        Bundle extras = new Bundle();
+        if(cropType == MessageHandler.REQUEST_CODE_SELECT_BKG) {
+            extras.putInt(CropConfig.EXTRA_ASPECT_X, 9);
+            extras.putInt(CropConfig.EXTRA_ASPECT_Y, 4);
+            extras.putInt(CropConfig.EXTRA_OUTPUT_X, 720);
+            extras.putInt(CropConfig.EXTRA_OUTPUT_Y, 320);
+        } else if(cropType == MessageHandler.REQUEST_CODE_SELECT_PORTRAIT) {
+            extras.putString(CropConfig.EXTRA_CIRCLE_CROP, "Circle");
+        } else {
+            finish();
+        }
+
+        extras.putBoolean(CropConfig.EXTRA_SCALE, true);
+        extras.putBoolean(CropConfig.EXTRA_SCALE_UP_IF_NEEDED, true);
+        file = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg");
+        extras.putParcelable(CropConfig.EXTRA_OUTPUT, Uri.fromFile(file));
+        intent.putExtras(extras);
+
+        if(cropType == MessageHandler.REQUEST_CODE_SELECT_BKG) {
+            startActivityForResult(intent, MessageHandler.REQUEST_CODE_CROP_BG_IMAGE);
+        } else if(cropType == MessageHandler.REQUEST_CODE_SELECT_PORTRAIT) {
+            startActivityForResult(intent, MessageHandler.REQUEST_CODE_CROP_PORTRAIT_IMAGE);
+        }
     }
 }

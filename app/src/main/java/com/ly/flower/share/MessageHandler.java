@@ -26,6 +26,8 @@ public class MessageHandler {
 
 	public static final int REQUEST_CODE_SELECT_PORTRAIT					= 30;
 	public static final int REQUEST_CODE_SELECT_BKG							= 31;
+	public static final int REQUEST_CODE_CROP_PORTRAIT_IMAGE				= 32;
+	public static final int REQUEST_CODE_CROP_BG_IMAGE						= 33;
 
 
 	public static final int PRISE_OPERATION									= 41;
