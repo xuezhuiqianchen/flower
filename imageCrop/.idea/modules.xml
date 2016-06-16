@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ImageCrop_Demo.iml" filepath="$PROJECT_DIR$/../ImageCrop_Demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imageCrop.iml" filepath="$PROJECT_DIR$/imageCrop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../imageCrop_Demo/imageCrop_Demo.iml" filepath="$PROJECT_DIR$/../imageCrop_Demo/imageCrop_Demo.iml" />
+    </modules>
+  </component>
+</project>
