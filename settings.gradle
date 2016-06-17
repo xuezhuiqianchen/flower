@@ -1,1 +1,1 @@
-include ':app', ':PushSDK', ':multi-image-selector'
+include ':app', ':PushSDK', ':multi-image-selector', ':imageCrop'
